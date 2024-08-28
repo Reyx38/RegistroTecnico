@@ -10,7 +10,7 @@ using RegistroTecnico.DAL;
 namespace RegistroTecnico.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240827183056_Initial")]
+    [Migration("20240828021918_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -21,20 +21,20 @@ namespace RegistroTecnico.Migrations
 
             modelBuilder.Entity("RegistroTecnico.Models.Tecnicos", b =>
                 {
-                    b.Property<string>("nombre")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("tecniCold")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("nombre")
                         .HasColumnType("TEXT");
 
                     b.Property<double>("sueldoHora")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("tecniCold")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("nombre");
+                    b.HasKey("tecniCold");
 
                     b.ToTable("Tecnicos");
                 });

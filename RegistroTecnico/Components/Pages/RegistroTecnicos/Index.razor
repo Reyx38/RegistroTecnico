@@ -1,0 +1,47 @@
+﻿@page "/index"
+@inject TecnicosServices TS
+
+<h3>Registro De Tecnicos</h3>
+ @*Body*@
+    <div class="card-body">
+        <table class="table table-light">
+            <thead class="table table-striped text-center table-bordered mt-3 bg-danger text-white">
+                <tr>
+                    <th>Tecnicold</th>
+                    <th>Nombres</th>
+                    <th>Sueldo hora</th>
+                    <th>Detalles</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tecnico in tecnicos)
+                {
+                    <tr>
+                        <td class="text-center">@tecnico.tecniCold</td>
+                        <td class="text-center">@tecnico.nombre</td>
+                        <td class="text-center">@tecnico.sueldoHora</td>
+                        <td class="text-center">
+                            <a href="/index/creat" class=" bi bi-eye"></a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/index/creat" class=" bi bi-pencil-square"></a>
+                        </td>
+                        <td class="text-center">
+                            <a href="/index/creat" class=" bi bi-trash"></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+@code {
+     public List<Tecnicos> tecnicos = new List<Tecnicos>();
+
+     protected override async Task OnInitializedAsync()
+    {
+        tecnicos =  await TS.Listar(a => true);
+    }
+}
