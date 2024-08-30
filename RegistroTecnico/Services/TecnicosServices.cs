@@ -30,11 +30,26 @@ namespace RegistroTecnico.Services
 
 		public async Task<bool> Modificar(Tecnicos tecnicos)
 		{
-			_Contexto.Update(tecnicos);
-			return await _Contexto.SaveChangesAsync() > 0;
+			try
+			{
+				var entidadExistente = await _Contexto.Tecnicos.FindAsync(tecnicos.tecniCold);
+
+				if (entidadExistente == null)
+				{
+					throw new InvalidOperationException("El técnico no existe en la base de datos.");
+				}
+
+				_Contexto.Entry(entidadExistente).CurrentValues.SetValues(tecnicos);
+				return await _Contexto.SaveChangesAsync() > 0;
+			}
+			catch (InvalidOperationException ex)
+			{
+				Console.WriteLine($"Error: {ex.Message}");
+				throw;
+			}
 		}
 
-		public async Task<bool> Guardar(Tecnicos tecnicos)
+		public async Task<bool> Guardar(Tecnicos tecnico
 		{
 			if(!await ExisteNombre(tecnicos.nombre))
 				return await Insertar(tecnicos);
