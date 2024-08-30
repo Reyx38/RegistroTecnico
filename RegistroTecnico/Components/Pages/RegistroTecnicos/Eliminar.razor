@@ -1,0 +1,53 @@
+﻿@page "/index/eliminar/{tecnicoID:int}"
+@rendermode InteractiveServer
+@inject TecnicosServices TS
+@inject NavigationManager navigation
+<link href="eliminar.css" rel="stylesheet" />
+
+<h2>Eliminar Técnico</h2>
+
+@*Body*@
+<div class="Contenedor-eliminar">
+
+	<div class="list-eliminar">
+
+	<ul>
+		<li>Técnico Id: @tecnicos.tecniCold</li>
+		<li>Nombre del tecnico: @tecnicos.nombre</li>
+		<li>Sueldo por hora: @tecnicos.sueldoHora</li>
+	</ul>
+    </div>
+
+	<div>
+		<label>¿Seguro que desea eliminar a este técnico?</label>
+	</div>
+
+	<div class="botones">
+		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar técnico</button>
+	</div>
+
+	
+</div>
+@code {
+	[Parameter]
+	public int tecnicoID { get; set; }
+	Tecnicos tecnicos = new Tecnicos();
+
+	protected override async Task OnInitializedAsync()
+	{
+		tecnicos = await TS.Buscar(tecnicoID);
+	}
+
+	public async Task eliminar()
+	{
+
+		await TS.Eliminar(tecnicos.tecniCold);
+		navigation.NavigateTo("/index");
+
+	}
+	public void Volver()
+	{
+		navigation.NavigateTo("/index");
+	}
+}

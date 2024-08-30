@@ -13,12 +13,16 @@ namespace RegistroTecnico.Services
 			_Contexto = Contexto;
 
 		}
-		public async Task<bool> Existe(String nombre)
+		public async Task<bool> ExisteNombre(String nombre)
 		{
 			return await _Contexto.Tecnicos
 				.AnyAsync(T => T.nombre == nombre);
 		}
-		public async Task<bool> Insertar(Tecnicos tecnicos)
+        public async Task<bool> NombreExiste(int id)
+        {
+            return await _Contexto.Tecnicos.AnyAsync(t => t.tecniCold == id);
+        }
+        public async Task<bool> Insertar(Tecnicos tecnicos)
 		{
 			await _Contexto.Tecnicos.AddAsync(tecnicos);
 			return await _Contexto.SaveChangesAsync() > 0;
@@ -32,7 +36,7 @@ namespace RegistroTecnico.Services
 
 		public async Task<bool> Guardar(Tecnicos tecnicos)
 		{
-			if(!await Existe(tecnicos.nombre))
+			if(!await ExisteNombre(tecnicos.nombre))
 				return await Insertar(tecnicos);
 
 			return await Modificar(tecnicos);
