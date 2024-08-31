@@ -4,6 +4,7 @@
 @inject NavigationManager navigation
 
 <PageTitle>Crear Técnicos</PageTitle>
+<h2>Crear nuevos Tecnicos</h2>
 
 <EditForm Model="@tecnicos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -12,6 +13,12 @@
     <div class="Contenedor_Agregar">
         <div class="Contenedor_Secundario">
             <h3>Nuevo técnico</h3>
+
+            <div class="inputs-agregar">
+                <label>Tecnico Id:</label>
+                <InputNumber @bind-Value="tecnicos.tecniCold" />
+                <ValidationMessage For="@(() => tecnicos.tecniCold)" />
+            </div>
 
             <div class="inputs-agregar">
                 <label>Nombres:</label>
@@ -42,20 +49,27 @@
 </EditForm>
 
 @code {
-	public Tecnicos tecnicos { get; set; } = new Tecnicos();
-	string Mensaje { get; set; } = string.Empty;
+    public Tecnicos tecnicos { get; set; } = new Tecnicos();
+    string Mensaje { get; set; } = string.Empty;
 
     public async Task Guardar()
     {
         Mensaje = string.Empty; 
-        if (string.IsNullOrWhiteSpace(tecnicos.nombre) || tecnicos.sueldoHora < 0)
+        if (string.IsNullOrWhiteSpace(tecnicos.nombre) || tecnicos.sueldoHora < 0 || tecnicos.tecniCold <= 0)
         {
             Mensaje = "Por favor, complete todos los campos correctamente.";
             return;
         }
+        var idExiste = await TS.ExisteId(tecnicos.tecniCold);
+        if (idExiste)
+        {
+            Mensaje = "Ya existe un técnico con el mismo Id.";
+            return;
+        
+        }
 
-        var existeTecnico = await TS.ExisteNombre(tecnicos.nombre);
-        if (existeTecnico)
+        var nombreExiste = await TS.ExisteNombre(tecnicos.nombre);
+        if (nombreExiste)
         {
             Mensaje = "Ya existe un técnico con el mismo nombre.";
             return;
@@ -67,6 +81,5 @@
 	public void Volver()
 	{
 		navigation.NavigateTo("/index");
-	}
-
+    }
 }
