@@ -111,10 +111,12 @@ td {
 }
 
     .crear-nuevo .btn {
+        position: relative;
         background-color: #FFC857;
         color: #2E2E3A;
         border: 2px solid #2E2E3A;
         border-radius: 5px;
+        right:85%;
         padding: 10px 20px;
         cursor: pointer;
         font-size: 16px;
