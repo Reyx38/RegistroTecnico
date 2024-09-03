@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RegistroTecnico.DAL;
-using RegistroTecnico.Models;
+using RegistroTecnicos.DAL;
+using RegistroTecnicos.Models;
 using System.Linq.Expressions;
 
-namespace RegistroTecnico.Services
+namespace RegistroTecnicos.Services
 {
 	public class TecnicosServices
 	{
@@ -22,13 +22,13 @@ namespace RegistroTecnico.Services
         {
             return await _Contexto.Tecnicos.AnyAsync(t => t.tecniCold == id);
         }
-        public async Task<bool> Insertar(Tecnicos tecnicos)
+        private async Task<bool> Insertar(Tecnicos tecnicos)
 		{
 			await _Contexto.Tecnicos.AddAsync(tecnicos);
 			return await _Contexto.SaveChangesAsync() > 0;
 		}
 
-		public async Task<bool> Modificar(Tecnicos tecnicos)
+		private async Task<bool> Modificar(Tecnicos tecnicos)
 		{
 			try
 			{
