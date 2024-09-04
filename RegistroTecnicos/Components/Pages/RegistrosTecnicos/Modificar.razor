@@ -12,17 +12,17 @@
 	<h2>Modificar</h2>
 
 	<div>
-		<label>Técnico Id: @tecnicos.TecnicoId</label>
+		<label>Técnico Id: @Tecnico.TecnicoId</label>
 	</div>
 
 	<div class="Inputs-text">
 		<label>Nombre:</label>
-		<input type="text" @bind-value="@tecnicos.Nombres" />
+		<input type="text" @bind-value="@Tecnico.Nombres" />
 	</div>
 
 	<div class="Inputs-text">
 		<label>Sueldo por hora:</label>
-		<input type="text" @bind-value="@tecnicos.SueldoHora" />
+		<input type="text" @bind-value="@Tecnico.SueldoHora" />
 	</div>
 
 	<div class="botones">
@@ -33,18 +33,18 @@
 
 @code {
 	[Parameter]
-	public int tecnicoID { get; set; }
-	Tecnicos tecnicos = new Tecnicos();
+	public int TecnicoId { get; set; }
+	Tecnicos Tecnico = new Tecnicos();
 
 	protected override async Task OnInitializedAsync()
 	{
-		tecnicos = await TS.Buscar(tecnicoID);
+		Tecnico = await TS.Buscar(TecnicoId);
 	}
 
 	public async Task Guardar()
 	{
 
-		await TS.Guardar(tecnicos);
+		await TS.Guardar(Tecnico);
 		navigation.NavigateTo("/index");
 
 	}

@@ -11,8 +11,7 @@ public class TecnicosServices(Contexto contexto)
 
     public async Task<bool> ExisteNombre(String nombre)
     {
-        return await _contexto.Tecnicos
-            .AnyAsync(T => T.Nombres == nombre);
+        return await _contexto.Tecnicos.AnyAsync(T => T.Nombres == nombre);
     }
     public async Task<bool> ExisteId(int id)
     {
@@ -26,28 +25,13 @@ public class TecnicosServices(Contexto contexto)
 
     private async Task<bool> Modificar(Tecnicos tecnicos)
     {
-        try
-        {
-            var entidadExistente = await _contexto.Tecnicos.FindAsync(tecnicos.TecnicoId);
-
-            if (entidadExistente == null)
-            {
-                throw new InvalidOperationException("El técnico no existe en la base de datos.");
-            }
-
-            _contexto.Entry(entidadExistente).CurrentValues.SetValues(tecnicos);
-            return await _contexto.SaveChangesAsync() > 0;
-        }
-        catch (InvalidOperationException ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-            throw;
-        }
+        _contexto.Update(tecnicos);
+        return await _contexto.SaveChangesAsync() > 0;
     }
 
     public async Task<bool> Guardar(Tecnicos tecnico)
     {
-        if (!await ExisteNombre(tecnico.Nombres))
+        if (!await ExisteId(tecnico.TecnicoId))
             return await Insertar(tecnico);
 
         return await Modificar(tecnico);
