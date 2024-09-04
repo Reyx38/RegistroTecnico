@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RegistroTecnico.DAL;
+using RegistroTecnicos.DAL;
 
 #nullable disable
 
-namespace RegistroTecnico.Migrations
+namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240828021918_Initial")]
-    partial class Initial
+    [Migration("20240903200414_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,16 +19,14 @@ namespace RegistroTecnico.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("RegistroTecnico.Models.Tecnicos", b =>
+            modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
                 {
                     b.Property<int>("tecniCold")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Apellido")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("nombre")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<double>("sueldoHora")

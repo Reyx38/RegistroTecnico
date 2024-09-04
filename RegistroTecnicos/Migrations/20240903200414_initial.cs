@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace RegistroTecnico.Migrations
+namespace RegistroTecnicos.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +16,7 @@ namespace RegistroTecnico.Migrations
                 {
                     tecniCold = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    nombre = table.Column<string>(type: "TEXT", nullable: true),
-                    Apellido = table.Column<string>(type: "TEXT", nullable: true),
+                    nombre = table.Column<string>(type: "TEXT", nullable: false),
                     sueldoHora = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
