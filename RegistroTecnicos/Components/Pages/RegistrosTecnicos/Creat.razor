@@ -15,12 +15,6 @@
             <h3>Nuevo técnico</h3>
 
             <div class="inputs-agregar">
-                <label>Tecnico Id:</label>
-                <InputNumber @bind-Value="Tecnicos.TecnicoId" />
-                <ValidationMessage For="@(() => Tecnicos.TecnicoId)" />
-            </div>
-
-            <div class="inputs-agregar">
                 <label>Nombres:</label>
                 <InputText @bind-Value="Tecnicos.Nombres" />
                 <ValidationMessage For="@(() => Tecnicos.Nombres)" />
@@ -30,7 +24,7 @@
                 <InputNumber @bind-Value="Tecnicos.SueldoHora" />
                 <ValidationMessage For="@(() => Tecnicos.SueldoHora)" />
             </div>
-            <!-- Mostrar Mensaje de Error -->
+
             @if (!string.IsNullOrEmpty(Mensaje))
             {
                 <div class="alert alert-danger">
@@ -55,17 +49,10 @@
     public async Task Guardar()
     {
         Mensaje = string.Empty; 
-        if (string.IsNullOrWhiteSpace(Tecnicos.Nombres) || Tecnicos.SueldoHora < 0 || Tecnicos.TecnicoId <= 0)
+        if (string.IsNullOrWhiteSpace(Tecnicos.Nombres) || Tecnicos.SueldoHora < 0 )
         {
             Mensaje = "Por favor, complete todos los campos correctamente.";
             return;
-        }
-        var idExiste = await TS.ExisteId(Tecnicos.TecnicoId);
-        if (idExiste)
-        {
-            Mensaje = "Ya existe un técnico con el mismo Id.";
-            return;
-        
         }
 
         var nombreExiste = await TS.ExisteNombre(Tecnicos.Nombres);
