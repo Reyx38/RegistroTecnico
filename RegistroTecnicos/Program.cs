@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
 //obtenemos el ContStr
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
 //Agregamos el contexto
-builder.Services.AddDbContext<Contexto>(options => options.UseSqlite(ConStr));
+builder.Services.AddDbContext<Contexto>(Options => Options.UseSqlite(ConStr));
 
 builder.Services.AddScoped<TecnicosServices>();
 

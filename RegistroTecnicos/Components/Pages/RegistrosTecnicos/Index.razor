@@ -10,7 +10,7 @@
 <div class="col-md-6">
     <label class="form-label"><strong>búsqueda por id:</strong></label>
 	<div class="input-group">
-		<input type="number" id="valorFiltro" @bind="id" class="form-control" placeholder="Buscar por id" />
+		<input type="number" id="valorFiltro" @bind="Id" class="form-control" placeholder="Buscar por id" />
 		<button @onclick="Buscar" class="btn btn-success bi bi-search" type="button"> Buscar</button>
 	</div>
 </div>
@@ -29,20 +29,20 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var tecnico in tecnicos)
+                @foreach (var Tecnico in Tecnicos)
                 {
                     <tr>
-                        <td class="text-center">@tecnico.tecniCold</td>
-                        <td class="text-center">@tecnico.nombre</td>
-                        <td class="text-center">@tecnico.sueldoHora $</td>
+                        <td class="text-center">@Tecnico.TecnicoId</td>
+                        <td class="text-center">@Tecnico.Nombres</td>
+                        <td class="text-center">@Tecnico.SueldoHora $</td>
                         <td class="text-center">
-                            <a href="/index/details/@tecnico.tecniCold" class=" bi bi-eye"></a>
+                            <a href="/index/details/@Tecnico.TecnicoId" class=" bi bi-eye"></a>
                         </td>
                         <td class="text-center">
-                        <a href="/index/Modificar/@tecnico.tecniCold" class=" bi bi-pencil-square"></a>
+                        <a href="/index/Modificar/@Tecnico.TecnicoId" class=" bi bi-pencil-square"></a>
                         </td>
                         <td class="text-center">
-                        <a href="/index/eliminar/@tecnico.tecniCold" class=" bi bi-trash"></a>
+                        <a href="/index/eliminar/@Tecnico.TecnicoId" class=" bi bi-trash"></a>
                         </td>
                     </tr>
                 }
@@ -54,12 +54,12 @@
     </div>
 
 @code {
-    public List<Tecnicos> tecnicos = new List<Tecnicos>();
-    int id { get; set; } = 0;
+    public List<Tecnicos> Tecnicos = new List<Tecnicos>();
+    int Id { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        tecnicos =  await TS.Listar(a => true);
+        Tecnicos =  await TS.Listar(a => true);
     }
 
     public void goToCreat()
@@ -68,10 +68,10 @@
     }
     public async void Buscar()
     {
-        if(id <= 0 || !await TS.ExisteId(id))
+        if(Id <= 0 || !await TS.ExisteId(Id))
         {
             return;
         }
-        navigation.NavigateTo($"/index/details/{id}");
+        navigation.NavigateTo($"/index/details/{Id}");
     }
 }

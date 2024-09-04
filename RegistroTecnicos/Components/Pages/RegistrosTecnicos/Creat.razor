@@ -6,7 +6,7 @@
 <PageTitle>Crear Técnicos</PageTitle>
 <h2>Crear nuevos Tecnicos</h2>
 
-<EditForm Model="@tecnicos" OnValidSubmit="Guardar">
+<EditForm Model="@Tecnicos" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -16,19 +16,19 @@
 
             <div class="inputs-agregar">
                 <label>Tecnico Id:</label>
-                <InputNumber @bind-Value="tecnicos.tecniCold" />
-                <ValidationMessage For="@(() => tecnicos.tecniCold)" />
+                <InputNumber @bind-Value="Tecnicos.TecnicoId" />
+                <ValidationMessage For="@(() => Tecnicos.TecnicoId)" />
             </div>
 
             <div class="inputs-agregar">
                 <label>Nombres:</label>
-                <InputText @bind-Value="tecnicos.nombre" />
-                <ValidationMessage For="@(() => tecnicos.nombre)" />
+                <InputText @bind-Value="Tecnicos.Nombres" />
+                <ValidationMessage For="@(() => Tecnicos.Nombres)" />
             </div>
             <div class="inputs-agregar">
                 <label>Sueldo hora:</label>
-                <InputNumber @bind-Value="tecnicos.sueldoHora" />
-                <ValidationMessage For="@(() => tecnicos.sueldoHora)" />
+                <InputNumber @bind-Value="Tecnicos.SueldoHora" />
+                <ValidationMessage For="@(() => Tecnicos.SueldoHora)" />
             </div>
             <!-- Mostrar Mensaje de Error -->
             @if (!string.IsNullOrEmpty(Mensaje))
@@ -49,18 +49,18 @@
 </EditForm>
 
 @code {
-    public Tecnicos tecnicos { get; set; } = new Tecnicos();
+    public Tecnicos Tecnicos { get; set; } = new Tecnicos();
     string Mensaje { get; set; } = string.Empty;
 
     public async Task Guardar()
     {
         Mensaje = string.Empty; 
-        if (string.IsNullOrWhiteSpace(tecnicos.nombre) || tecnicos.sueldoHora < 0 || tecnicos.tecniCold <= 0)
+        if (string.IsNullOrWhiteSpace(Tecnicos.Nombres) || Tecnicos.SueldoHora < 0 || Tecnicos.TecnicoId <= 0)
         {
             Mensaje = "Por favor, complete todos los campos correctamente.";
             return;
         }
-        var idExiste = await TS.ExisteId(tecnicos.tecniCold);
+        var idExiste = await TS.ExisteId(Tecnicos.TecnicoId);
         if (idExiste)
         {
             Mensaje = "Ya existe un técnico con el mismo Id.";
@@ -68,14 +68,14 @@
         
         }
 
-        var nombreExiste = await TS.ExisteNombre(tecnicos.nombre);
+        var nombreExiste = await TS.ExisteNombre(Tecnicos.Nombres);
         if (nombreExiste)
         {
-            Mensaje = "Ya existe un técnico con el mismo nombre.";
+            Mensaje = "Ya existe un técnico con el mismo Nombres.";
             return;
         }
 
-        await TS.Guardar(tecnicos);
+        await TS.Guardar(Tecnicos);
         navigation.NavigateTo("/index");
     }
 	public void Volver()

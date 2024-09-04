@@ -14,9 +14,9 @@
 	<div class="list-eliminar">
 
 	<ul>
-		<li>Técnico Id: @tecnicos.tecniCold</li>
-		<li>Nombre del tecnico: @tecnicos.nombre</li>
-		<li>Sueldo por hora: @tecnicos.sueldoHora</li>
+		<li>Técnico Id: @Tecnicos.TecnicoId</li>
+		<li>Nombre del tecnico: @Tecnicos.Nombres</li>
+		<li>Sueldo por hora: @Tecnicos.SueldoHora</li>
 	</ul>
     </div>
 
@@ -33,18 +33,18 @@
 </div>
 @code {
 	[Parameter]
-	public int tecnicoID { get; set; }
-	Tecnicos tecnicos = new Tecnicos();
+	public int TecnicoId { get; set; }
+	Tecnicos Tecnicos = new Tecnicos();
 
 	protected override async Task OnInitializedAsync()
 	{
-		tecnicos = await TS.Buscar(tecnicoID);
+		Tecnicos = await TS.Buscar(TecnicoId);
 	}
 
 	public async Task eliminar()
 	{
 
-		await TS.Eliminar(tecnicos.tecniCold);
+		await TS.Eliminar(Tecnicos.TecnicoId);
 		navigation.NavigateTo("/index");
 
 	}

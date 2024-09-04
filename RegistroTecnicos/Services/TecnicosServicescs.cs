@@ -5,18 +5,18 @@ using System.Linq.Expressions;
 
 namespace RegistroTecnicos.Services;
 
-public class TecnicosServices(Contexto Contexto)
+public class TecnicosServices(Contexto contexto)
 {
-    public readonly Contexto _contexto = Contexto;
+    public readonly Contexto _contexto = contexto;
 
     public async Task<bool> ExisteNombre(String nombre)
     {
         return await _contexto.Tecnicos
-            .AnyAsync(T => T.nombre == nombre);
+            .AnyAsync(T => T.Nombres == nombre);
     }
     public async Task<bool> ExisteId(int id)
     {
-        return await _contexto.Tecnicos.AnyAsync(t => t.tecniCold == id);
+        return await _contexto.Tecnicos.AnyAsync(t => t.TecnicoId == id);
     }
     private async Task<bool> Insertar(Tecnicos tecnicos)
     {
@@ -28,7 +28,7 @@ public class TecnicosServices(Contexto Contexto)
     {
         try
         {
-            var entidadExistente = await _contexto.Tecnicos.FindAsync(tecnicos.tecniCold);
+            var entidadExistente = await _contexto.Tecnicos.FindAsync(tecnicos.TecnicoId);
 
             if (entidadExistente == null)
             {
@@ -47,24 +47,24 @@ public class TecnicosServices(Contexto Contexto)
 
     public async Task<bool> Guardar(Tecnicos tecnico)
     {
-        if (!await ExisteNombre(tecnico.nombre))
+        if (!await ExisteNombre(tecnico.Nombres))
             return await Insertar(tecnico);
 
         return await Modificar(tecnico);
     }
 
-    public async Task<bool> Eliminar(int tecniCold)
+    public async Task<bool> Eliminar(int id)
     {
         return await _contexto.Tecnicos.
-            Where(p => p.tecniCold == tecniCold).ExecuteDeleteAsync() > 0;
+            Where(p => p.TecnicoId == id).ExecuteDeleteAsync() > 0;
 
     }
 
-    public async Task<Tecnicos?> Buscar(int tecnicold)
+    public async Task<Tecnicos?> Buscar(int id)
     {
         return await _contexto.Tecnicos.
             AsNoTracking()
-            .FirstOrDefaultAsync(p => p.tecniCold == tecnicold);
+            .FirstOrDefaultAsync(p => p.TecnicoId == id);
     }
 
     public async Task<List<Tecnicos>> Listar(Expression<Func<Tecnicos, bool>> criterio)

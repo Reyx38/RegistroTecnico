@@ -1,4 +1,4 @@
-﻿@page "/index/details/{tecniCold:int}"
+﻿@page "/index/details/{TecnicoId:int}"
 @rendermode InteractiveServer
 @inject TecnicosServices TS
 @inject NavigationManager navigation
@@ -13,9 +13,9 @@
 	<h3>Detalles del técnico</h3>
 	<div class="list-details">
 		<ul>
-			<li><strong>técnico ld:</strong> @tecnicos.tecniCold</li>
-			<li><strong>Nombre del técnico:</strong> @tecnicos.nombre</li>
-			<li><strong>Sueldo por hora:</strong> @tecnicos.sueldoHora</li>
+			<li><strong>técnico ld:</strong> @tecnicos.TecnicoId</li>
+			<li><strong>Nombre del técnico:</strong> @tecnicos.Nombres</li>
+			<li><strong>Sueldo por hora:</strong> @tecnicos.SueldoHora</li>
 		</ul>
 	</div>
 
@@ -26,11 +26,11 @@
 
 @code {
 	[Parameter]
-	public int tecniCold { get; set; }
+	public int TecnicoId { get; set; }
 	Tecnicos tecnicos { get; set; } = new Tecnicos();
 	protected override async Task OnInitializedAsync()
 	{
-		tecnicos = await TS.Buscar(tecniCold);
+		tecnicos = await TS.Buscar(TecnicoId);
 	}
 
 	public void Volver()

@@ -4,9 +4,9 @@ namespace RegistroTecnicos.Models;
 public class Tecnicos
 {
     [Key]
-    public int tecniCold { get; set; }
+    public int TecnicoId { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
-    public string? nombre { get; set; }
+    public string? Nombres { get; set; }
     [Range(0.01, double.MaxValue, ErrorMessage = "El sueldo por hora debe ser mayor a 0.")]
-    public double sueldoHora { get; set; }
+    public double SueldoHora { get; set; }
 }
