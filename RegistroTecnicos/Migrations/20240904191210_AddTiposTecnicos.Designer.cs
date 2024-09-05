@@ -10,8 +10,8 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240903200414_initial")]
-    partial class initial
+    [Migration("20240904191210_AddTiposTecnicos")]
+    partial class AddTiposTecnicos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,18 +21,33 @@ namespace RegistroTecnicos.Migrations
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
                 {
-                    b.Property<int>("tecniCold")
+                    b.Property<int>("TecnicoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("nombre")
+                    b.Property<string>("Nombres")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("sueldoHora")
+                    b.Property<double>("SueldoHora")
                         .HasColumnType("REAL");
 
-                    b.HasKey("tecniCold");
+                    b.HasKey("TecnicoId");
+
+                    b.ToTable("Tecnicos");
+                });
+
+            modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
+                {
+                    b.Property<int>("TipoDeTecnicosId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TipoDeTecnicosId");
 
                     b.ToTable("Tecnicos");
                 });

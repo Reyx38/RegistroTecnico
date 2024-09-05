@@ -5,7 +5,7 @@
 namespace RegistroTecnicos.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,14 +14,14 @@ namespace RegistroTecnicos.Migrations
                 name: "Tecnicos",
                 columns: table => new
                 {
-                    tecniCold = table.Column<int>(type: "INTEGER", nullable: false)
+                    TecnicoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    sueldoHora = table.Column<double>(type: "REAL", nullable: false)
+                    Nombres = table.Column<string>(type: "TEXT", nullable: false),
+                    SueldoHora = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tecnicos", x => x.tecniCold);
+                    table.PrimaryKey("PK_Tecnicos", x => x.TecnicoId);
                 });
         }
 

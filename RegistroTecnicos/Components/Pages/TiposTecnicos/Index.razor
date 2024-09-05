@@ -54,7 +54,6 @@
 @code {
     public List<TiposTecnicos> TipoTecnicos = new List<TiposTecnicos>();
     int Id { get; set; } = 0;
-
     protected override async Task OnInitializedAsync()
     {
         TipoTecnicos = await TTS.Listar(a => true);
@@ -62,7 +61,7 @@
 
     public void goToCreat()
     {
-        navigation.NavigateTo("/index/creat");
+        navigation.NavigateTo("/TiposTecnicos/RegistroTipos/Creat");
     }
     public async void Buscar()
     {
