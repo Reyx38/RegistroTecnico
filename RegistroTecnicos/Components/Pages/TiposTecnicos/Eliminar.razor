@@ -1,0 +1,53 @@
+﻿@page "/TiposTecnicos/RegistroTipos/Eliminar/{TipoDeTecnicoId:int}"
+@rendermode InteractiveServer
+@inject TiposTecnicosServices TTS
+@inject NavigationManager navigation
+<link href="eliminar.css" rel="stylesheet" />
+
+<PageTitle>Eliminar tipo de técnicos</PageTitle>
+
+<h2>Eliminar tipo de técnico</h2>
+@*Body*@
+<div class="Contenedor-eliminar">
+
+	<div class="list-eliminar">
+
+		<ul>
+			<li>Técnico Id: @TipoTecnicos.TipoDeTecnicosId</li>
+			<li>Nombre del tecnico: @TipoTecnicos.Descripcion</li>
+		</ul>
+	</div>
+
+	<div class="alert alert-danger">
+		<label>¿Seguro que desea eliminar a este técnico?</label>
+	</div>
+
+	<div class="botones">
+		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar técnico</button>
+	</div>
+
+
+</div>
+@code {
+	[Parameter]
+	public int TipoDeTecnicoId { get; set; }
+	TiposTecnicos TipoTecnicos = new TiposTecnicos();
+
+	protected override async Task OnInitializedAsync()
+	{
+		TipoTecnicos = await TTS.Buscar(TipoDeTecnicoId);
+	}
+
+	public async Task eliminar()
+	{
+
+		await TTS.Eliminar(TipoTecnicos.TipoDeTecnicosId);
+		navigation.NavigateTo("/index");
+
+	}
+	public void Volver()
+	{
+		navigation.NavigateTo("/index");
+	}
+}
