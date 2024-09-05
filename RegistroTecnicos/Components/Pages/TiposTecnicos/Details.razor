@@ -1,0 +1,39 @@
+﻿@page "/TiposTecnicos/RegistroTipos/details/{TipoDeTecnicoId:int}"
+@rendermode InteractiveServer
+@inject TiposTecnicosServices TTS
+@inject NavigationManager navigation
+<link rel="stylesheet" href="details.css" />
+
+<PageTitle>Detalles del tipo de técnico</PageTitle>
+
+@*Header*@
+<h2>Details</h2>
+@*Body*@
+<div class="Contenedor_detalles">
+	<h3>Detalles del técnico</h3>
+	<div class="list-details">
+		<ul>
+			<li><strong>Técnico ld:</strong> @TipoTecnicos.TipoDeTecnicosId</li>
+			<li><strong>Descripcion:</strong> @TipoTecnicos.Descripcion</li>
+		</ul>
+	</div>
+
+	<div class="btn-details">
+		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public int TipoDeTecnicoId { get; set; }
+	TiposTecnicos TipoTecnicos { get; set; } = new TiposTecnicos();
+	protected override async Task OnInitializedAsync()
+	{
+		TipoTecnicos = await TTS.Buscar(TipoDeTecnicoId);
+	}
+
+	public void Volver()
+	{
+		navigation.NavigateTo("/TiposTecnicos/RegistroTipos");
+	}
+}
