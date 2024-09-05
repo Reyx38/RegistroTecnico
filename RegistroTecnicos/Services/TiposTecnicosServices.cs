@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RegistroTecnicos.DAL;
 using RegistroTecnicos.Models;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace RegistroTecnicos.Services;
 
@@ -43,6 +45,16 @@ public class TiposTecnicosServices(Contexto contexto)
         return await _contexto.TiposTecnicos.
             Where(t => t.TipoDeTecnicosId == id).ExecuteDeleteAsync() > 0;
     }
-
-
+    public async Task<TiposTecnicos?> Buscar(int id)
+    {
+        return await _contexto.TiposTecnicos.
+            AsNoTracking()
+            .FirstOrDefaultAsync(t => t.TipoDeTecnicosId == id);
+    }
+    public async Task<List<TiposTecnicos>> Listar(Expression<Func<TiposTecnicos, bool>> criterio)
+    {
+        return await _contexto.TiposTecnicos
+            .AsNoTracking()
+            .Where(criterio) .ToListAsync();
+    }
 }
