@@ -4,11 +4,11 @@
 @inject NavigationManager navigation
 <link rel="stylesheet" href="index.css" />
 
-<PageTitle>Registro de tipos de técnicos</PageTitle>
+<PageTitle>Registro de tipos de t&eacute;cnicos</PageTitle>
 @*Header*@
-<h2>Registro de tipo de técnicos</h2>
+<h2>Registro de tipo de t&eacute;cnicos</h2>
 <div class="col-md-6">
-    <label class="form-label"><strong>búsqueda por id:</strong></label>
+    <label class="form-label"><strong>b&uacute;squeda por id:</strong></label>
     <div class="input-group">
         <input type="number" id="valorFiltro" @bind="Id" class="form-control" placeholder="Buscar por id" />
         <button @onclick="Buscar" class="btn btn-success bi bi-search" type="button"> Buscar</button>
@@ -20,27 +20,27 @@
     <table class="table table-light">
         <thead class="table table-striped text-center table-bordered mt-3 ">
             <tr>
-                <th>Tipos tecnicos Id</th>
-                <th>Descripcion</th>
+                <th>Tipos t&eacute;cnicos Id</th>
+                <th>Descripci&oacute;n</th>
                 <th>Detalles</th>
                 <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var TipoTecnicos in TipoTecnicos)
+            @foreach (var TipoTecnico in TipoTecnicos)
             {
                 <tr>
-                    <td class="text-center">@TipoTecnicos.TipoDeTecnicosId</td>
-                    <td class="text-center">@TipoTecnicos.Descripcion</td>
+                    <td class="text-center">@TipoTecnico.TipoDeTecnicosId</td>
+                    <td class="text-center">@TipoTecnico.Descripcion</td>
                     <td class="text-center">
-                        <a href="/TiposTecnicos/RegistroTipos/details/@TipoTecnicos.TipoDeTecnicosId" class=" bi bi-eye"></a>
+                        <a href="/TiposTecnicos/RegistroTipos/details/@TipoTecnico.TipoDeTecnicosId" class=" bi bi-eye"></a>
                     </td>
                     <td class="text-center">
-                        <a href="/TiposTecnicos/RegistroTipos/Modificar/@TipoTecnicos.TipoDeTecnicosId" class=" bi bi-pencil-square"></a>
+                        <a href="/TiposTecnicos/RegistroTipos/Modificar/@TipoTecnico.TipoDeTecnicosId" class=" bi bi-pencil-square"></a>
                     </td>
                     <td class="text-center">
-                        <a href="/TiposTecnicos/RegistroTipos/Eliminar/@TipoTecnicos.TipoDeTecnicosId" class=" bi bi-trash"></a>
+                        <a href="/TiposTecnicos/RegistroTipos/Eliminar/@TipoTecnico.TipoDeTecnicosId" class=" bi bi-trash"></a>
                     </td>
                 </tr>
             }
