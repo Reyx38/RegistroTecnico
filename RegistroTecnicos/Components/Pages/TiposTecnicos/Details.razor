@@ -4,17 +4,17 @@
 @inject NavigationManager navigation
 <link rel="stylesheet" href="details.css" />
 
-<PageTitle>Detalles del tipo de técnico</PageTitle>
+<PageTitle>Detalles del tipo de t&eacute;cnico</PageTitle>
 
 @*Header*@
 <h2>Details</h2>
 @*Body*@
 <div class="Contenedor_detalles">
-	<h3>Detalles del técnico</h3>
+	<h3>Detalles del t&eacute;cnico</h3>
 	<div class="list-details">
 		<ul>
-			<li><strong>Técnico ld:</strong> @TipoTecnicos.TipoDeTecnicosId</li>
-			<li><strong>Descripcion:</strong> @TipoTecnicos.Descripcion</li>
+			<li><strong>Tipo de t&eacute;cnico Id:</strong> @TipoTecnico.TipoDeTecnicosId</li>
+			<li><strong>Descripci&oacute;n:</strong> @TipoTecnico.Descripcion</li>
 		</ul>
 	</div>
 
@@ -26,10 +26,10 @@
 @code {
 	[Parameter]
 	public int TipoDeTecnicoId { get; set; }
-	TiposTecnicos TipoTecnicos { get; set; } = new TiposTecnicos();
+	TiposTecnicos TipoTecnico { get; set; } = new TiposTecnicos();
 	protected override async Task OnInitializedAsync()
 	{
-		TipoTecnicos = await TTS.Buscar(TipoDeTecnicoId);
+		TipoTecnico = await TTS.Buscar(TipoDeTecnicoId);
 	}
 
 	public void Volver()
