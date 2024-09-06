@@ -4,9 +4,9 @@
 @inject NavigationManager navigation
 <link rel="stylesheet" href="modificar.css" />
 
-<PageTitle>Modificar técnicos</PageTitle>
+<PageTitle>Modificar t&eacute;cnicos</PageTitle>
 
-<h3>Modificar técnicos</h3>
+<h3>Modificar t&eacute;cnicos</h3>
 <EditForm Model="@TipoTecnico" OnValidSubmit="Guardar">
 	<DataAnnotationsValidator />
 	<ValidationSummary />
@@ -15,14 +15,13 @@
 		<h2>Modificar</h2>
 
 		<div>
-			<label>Técnico Id: @TipoTecnico.TipoDeTecnicosId</label>
+			<label>Tipo de t&eacute;cnico Id: @TipoTecnico.TipoDeTecnicosId</label>
 		</div>
 
 		<div class="Inputs-text">
-			<label>Sueldo por hora:</label>
+			<label>Descripci&oacute;n:</label>
 			<InputText @bind-Value="@TipoTecnico.Descripcion" />
 			<ValidationMessage For="@(() => TipoTecnico.Descripcion)" />
-
 		</div>
 
 		<div class="botones">
