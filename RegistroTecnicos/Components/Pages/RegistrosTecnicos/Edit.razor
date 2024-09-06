@@ -1,0 +1,81 @@
+﻿@page "/index/Modificar/{tecnicoId:int}"
+@rendermode InteractiveServer
+@inject TecnicosServices TS
+@inject TiposTecnicosServices TTS
+@inject NavigationManager navigation
+<link rel="stylesheet" href="modificar.css" />
+
+<PageTitle>Modificar t&eacute;cnicos</PageTitle>
+
+<h3>Modificar t&eacute;cnicos</h3>
+<EditForm Model="@Tecnico" OnValidSubmit="Guardar">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="Contenedor-Modificar">
+		<h2>Modificar</h2>
+
+		<div>
+			<label>T&eacute;cnico Id: @Tecnico.TecnicoId</label>
+		</div>
+
+		<div class="Inputs-text">
+			<label>Seleccionar Tipo de T&eacute;cnico:</label>
+			<InputSelect @bind-Value="Tecnico.TipoTecnicoId">
+				@foreach (var tipo in TipoTecnico)
+				{
+					<option value="@tipo.TipoDeTecnicosId">@tipo.Descripcion</option>
+				}
+			</InputSelect>
+			<ValidationMessage For="@(() => Tecnico.TipoTecnicoId)" />
+		</div>
+
+		<div class="Inputs-text">
+			<label>Nombre:</label>
+			<input type="text" @bind-value="@Tecnico.Nombres" />
+			<ValidationMessage For="@(() => Tecnico.Nombres)" />
+		</div>
+
+		<div class="Inputs-text">
+			<label>Sueldo por hora:</label>
+			<input type="text" @bind-value="@Tecnico.SueldoHora" />
+			<ValidationMessage For="@(() => Tecnico.SueldoHora)" />
+
+		</div>
+
+		<div class="botones">
+			<button type="submit" @onclick="Volver" class="bi bi-arrow-left-square"> Volver</button>
+			<button type="submit" @onclick="Guardar" class="bi bi-floppy"> Guardar</button>
+		</div>
+	</div>
+
+</EditForm>
+
+
+
+@code {
+	[Parameter]
+	public int TecnicoId { get; set; }
+	Tecnicos Tecnico = new Tecnicos();
+	public List<TiposTecnicos> TipoTecnico { get; set; } = new List<TiposTecnicos>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		Tecnico = await TS.Buscar(TecnicoId);
+		TipoTecnico = await TTS.Listar(t => true);
+
+	}
+
+	public async Task Guardar()
+	{
+
+		await TS.Guardar(Tecnico);
+		navigation.NavigateTo("/index");
+
+	}
+	public void Volver()
+	{
+		navigation.NavigateTo("/index");
+	}
+
+}
