@@ -4,11 +4,11 @@
 @inject NavigationManager navigation
 <link rel="stylesheet" href="index.css" />
 
-<PageTitle>Registro de técnicos</PageTitle>
+<PageTitle>Registro de t&eacute;cnicos</PageTitle>
 @*Header*@
-<h2>Registro de técnicos</h2>
+<h2>Registro de t&eacute;cnicos</h2>
 <div class="col-md-6">
-    <label class="form-label"><strong>búsqueda por id:</strong></label>
+    <label class="form-label"><strong>b&uacute;squeda por id:</strong></label>
 	<div class="input-group">
 		<input type="number" id="valorFiltro" @bind="Id" class="form-control" placeholder="Buscar por id" />
 		<button @onclick="Buscar" class="btn btn-success bi bi-search" type="button"> Buscar</button>
@@ -20,9 +20,9 @@
     <table class="table table-light">
         <thead class="table table-striped text-center table-bordered mt-3 ">
                 <tr>
-                    <th>técnico ld</th>
+                    <th>T&eacute;cnico Id</th>
                     <th>Nombres</th>
-                    <th>Descripcion</th>
+                    <th>Descripci&oacute;n</th>
                     <th>Sueldo hora</th>
                     <th>Detalles</th>
                     <th>Modificar</th>
@@ -35,7 +35,7 @@
                     <tr>
                         <td class="text-center">@Tecnico.TecnicoId</td>
                         <td class="text-center">@Tecnico.Nombres</td>
-                        <td class="text-center">bobo </td>
+                        <td class="text-center">@Tecnico.TipoTecnico.Descripcion</td>
                         <td class="text-center">@Tecnico.SueldoHora $</td>
 
                         <td class="text-center">
