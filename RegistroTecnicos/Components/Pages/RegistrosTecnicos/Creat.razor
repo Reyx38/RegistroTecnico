@@ -1,28 +1,40 @@
 ﻿@page "/index/creat"
 @rendermode InteractiveServer 
 @inject TecnicosServices TS
+@inject TiposTecnicosServices TTS
 @inject NavigationManager navigation
 
-<PageTitle>Crear Técnicos</PageTitle>
-<h2>Crear nuevos Tecnicos</h2>
+<PageTitle>Crear T&eacute;cnicos</PageTitle>
+<h2>Crear nuevos T&eacute;cnicos</h2>
 
-<EditForm Model="@Tecnicos" OnValidSubmit="Guardar">
+<EditForm Model="@Tecnico" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="Contenedor_Agregar">
         <div class="Contenedor_Secundario">
-            <h3>Nuevo técnico</h3>
+            <h3>Nuevo t&eacute;cnico</h3>
+            <div class="inputs-agregar">
+                <label>Seleccionar Tipo de T&eacute;cnico:</label>
+                <InputSelect @bind-Value="Tecnico.TipoTecnicoId">
+                    @foreach (var tipo in TipoTecnico)
+                    {
+                        <option value="@tipo.TipoDeTecnicosId">@tipo.Descripcion</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => Tecnico.TipoTecnicoId)" />
+            </div>
 
             <div class="inputs-agregar">
                 <label>Nombres:</label>
-                <InputText @bind-Value="Tecnicos.Nombres" />
-                <ValidationMessage For="@(() => Tecnicos.Nombres)" />
+                <InputText @bind-Value="Tecnico.Nombres" />
+                <ValidationMessage For="@(() => Tecnico.Nombres)" />
             </div>
+
             <div class="inputs-agregar">
                 <label>Sueldo hora:</label>
-                <InputNumber @bind-Value="Tecnicos.SueldoHora" />
-                <ValidationMessage For="@(() => Tecnicos.SueldoHora)" />
+                <InputNumber @bind-Value="Tecnico.SueldoHora" />
+                <ValidationMessage For="@(() => Tecnico.SueldoHora)" />
             </div>
 
             @if (!string.IsNullOrEmpty(Mensaje))
@@ -43,26 +55,37 @@
 </EditForm>
 
 @code {
-    public Tecnicos Tecnicos { get; set; } = new Tecnicos();
+    public List<TiposTecnicos> TipoTecnico { get; set; } = new List<TiposTecnicos>();
+    public Tecnicos Tecnico { get; set; } = new Tecnicos();
     string Mensaje { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        TipoTecnico = await TTS.Listar(t => true);
+    }
 
     public async Task Guardar()
     {
         Mensaje = string.Empty; 
-        if (string.IsNullOrWhiteSpace(Tecnicos.Nombres) || Tecnicos.SueldoHora < 0 )
+        if(Tecnico.TipoTecnicoId == 0)
+        {
+            Mensaje = "Por favor, Agregue un tipo de tecnico";
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(Tecnico.Nombres) || Tecnico.SueldoHora < 0 )
         {
             Mensaje = "Por favor, complete todos los campos correctamente.";
             return;
         }
 
-        var nombreExiste = await TS.ExisteNombre(Tecnicos.Nombres);
+        var nombreExiste = await TS.ExisteNombre(Tecnico.Nombres);
         if (nombreExiste)
         {
             Mensaje = "Ya existe un técnico con el mismo Nombres.";
             return;
         }
 
-        await TS.Guardar(Tecnicos);
+        await TS.Guardar(Tecnico);
         navigation.NavigateTo("/index");
     }
 	public void Volver()
