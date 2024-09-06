@@ -4,18 +4,19 @@
 @inject NavigationManager navigation
 <link rel="stylesheet" href="details.css" />
 
-<PageTitle>Detalles del técnico</PageTitle>
+<PageTitle>Detalles del t&eacute;cnico</PageTitle>
 
 @*Header*@
 <h2>Details</h2>
 @*Body*@
 <div class="Contenedor_detalles">
-	<h3>Detalles del técnico</h3>
+	<h3>Detalles del t&eacute;cnico</h3>
 	<div class="list-details">
 		<ul>
-			<li><strong>técnico ld:</strong> @tecnicos.TecnicoId</li>
-			<li><strong>Nombre del técnico:</strong> @tecnicos.Nombres</li>
-			<li><strong>Sueldo por hora:</strong> @tecnicos.SueldoHora</li>
+			<li><strong>T&eacute;cnico Id:</strong> @Tecnico.TecnicoId</li>
+			<li><strong>Nombre del t&eacute;cnico:</strong> @Tecnico.Nombres</li>
+			<li><strong>Descripci&oacute;n del t&eacute;cnico:</strong> @Tecnico.TipoTecnico.Descripcion</li>
+			<li><strong>Sueldo por hora:</strong> @Tecnico.SueldoHora</li>
 		</ul>
 	</div>
 
@@ -27,10 +28,10 @@
 @code {
 	[Parameter]
 	public int TecnicoId { get; set; }
-	Tecnicos tecnicos { get; set; } = new Tecnicos();
+	Tecnicos Tecnico { get; set; } = new Tecnicos();
 	protected override async Task OnInitializedAsync()
 	{
-		tecnicos = await TS.Buscar(TecnicoId);
+		Tecnico = await TS.Buscar(TecnicoId);
 	}
 
 	public void Volver()
