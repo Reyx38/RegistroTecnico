@@ -7,7 +7,7 @@ namespace RegistroTecnicos.Services;
 
 public class TrabajoService(Contexto contexto)
 {
-	private readonly Contexto _contexto;
+	private readonly Contexto _contexto = contexto;
 	public async Task<bool> ExisteDescripcion(String descripcion)
 	{
 		return await _contexto.Trabajos.AnyAsync(T => T.Descripcion == descripcion);
@@ -45,7 +45,7 @@ public class TrabajoService(Contexto contexto)
 	public async Task<Trabajos?> Buscar(int id)
 	{
 		return await _contexto.Trabajos
-			.Include(t => t.TrabajoId)
+			.Include(t =>t.TecnicoId)
 			.AsNoTracking()
 			.FirstOrDefaultAsync(p => p.TrabajoId == id);
 	}
