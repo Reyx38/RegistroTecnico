@@ -1,0 +1,99 @@
+﻿@page "/RegistroTrabajos/Modificar/{trabajoId:int}"
+@rendermode InteractiveServer
+@inject TrabajoService WS
+@inject ClienteService CS
+@inject TecnicosServices TS
+@inject NavigationManager navigation
+<link rel="stylesheet" href="modificar.css" />
+
+<PageTitle>Modificar t&eacute;cnicos</PageTitle>
+
+<h3>Modificar t&eacute;cnicos</h3>
+<EditForm Model="@Trabajo" OnValidSubmit="Guardar">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<div class="Contenedor-Modificar">
+		<h2>Modificar</h2>
+
+		<div>
+			<label>Trabajo Id: @Trabajo.TecnicoId</label>
+		</div>
+
+		<div class="inputs-agregar">
+                <label>Cual es el cliente?:</label>
+                <InputSelect @bind-Value="Trabajo.ClienteId" readonly>
+                    @foreach (var Cliente in Clientes)
+                    {
+                        <option value="@Cliente.ClienteId">@Cliente.Nombres</option>
+                    }
+                </InputSelect>
+            </div>
+			
+            <div class="inputs-agregar">
+                <label>Fecha del trabajo:</label>
+                <InputDate @bind-Value="Trabajo.Fecha" readonly>@Trabajo.Fecha</InputDate>
+            </div>
+
+		<div class="Inputs-text">
+			<label>Seleccionar T&eacute;cnico:</label>
+			<InputSelect @bind-Value="@Trabajo.TecnicoId">
+				@foreach (var Tecnico in Tecnicos)
+				{
+					<option value="@Tecnico.TecnicoId">@Tecnico.Nombres</option>
+				}
+			</InputSelect>
+			<ValidationMessage For="@(() => Trabajo.TecnicoId)" />
+		</div>
+
+		<div class="Inputs-text">
+			<label>Nombre:</label>
+			<input type="text" @bind-value="@Trabajo.Descripcion" />
+			<ValidationMessage For="@(() => Trabajo.Descripcion)" />
+		</div>
+
+		<div class="Inputs-text">
+			<label>Monto:</label>
+			<input type="text" @bind-value="@Trabajo.Monto" />
+			<ValidationMessage For="@(() => Trabajo.Monto)" />
+
+		</div>
+
+		<div class="botones">
+			<button type="submit" @onclick="Volver" class="bi bi-arrow-left-square"> Volver</button>
+			<button type="submit" class="bi bi-floppy"> Guardar</button>
+		</div>
+	</div>
+
+</EditForm>
+
+
+
+@code {
+	[Parameter]
+	public int TrabajoId { get; set; }
+	public Trabajos Trabajo { get; set; } = new Trabajos();
+	public List<Tecnicos> Tecnicos = new List<Tecnicos>();
+	public List<Clientes> Clientes = new List<Clientes>();
+
+
+	string Mensaje { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		Trabajo = await WS.Buscar(TrabajoId);
+		Tecnicos = await TS.Listar(a => true);
+		Clientes = await CS.Listar(a => true);
+	}
+	public async Task Guardar()
+	{
+		await WS.Guardar(Trabajo);
+		navigation.NavigateTo("/index");
+
+	}
+	public void Volver()
+	{
+		navigation.NavigateTo("/index");
+	}
+
+}
