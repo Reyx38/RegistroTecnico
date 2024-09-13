@@ -1,6 +1,7 @@
 ﻿@page "/RegistroTrabajos/details/{TrabajoId:int}"
 @rendermode InteractiveServer
 @inject TrabajoService WS
+@inject IJSRuntime JS
 @inject NavigationManager navigation
 <link rel="stylesheet" href="details.css" />
 
@@ -13,7 +14,7 @@
 	<h3>Detalles del trabajo</h3>
 	<div class="list-details">
 		<ul>
-			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.TrabajoId</li>
+			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.Cliente</li>
 			<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
 			<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
 			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
@@ -25,6 +26,7 @@
 
 	<div class="btn-details">
 		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+		<button type="submit" @onclick="Terminar" class="btn btn-success bi bi-check-circle"> Finalizar </button>
 	</div>
 </div>
 
@@ -35,6 +37,17 @@
 	protected override async Task OnInitializedAsync()
 	{
 		Trabajo = await WS.Buscar(TrabajoId);
+	}
+
+	public async void Terminar()
+	{
+
+		string mensaje = $"La solicitud {Trabajo.Descripcion} ha sido realizada de manera existosa, espero seguir colaborando con usted";
+		string codificacion = Uri.EscapeDataString(mensaje);
+		String URLwasa = $"https://wa.me/+{Trabajo.Cliente.Telefono}?text={codificacion}";
+
+		await JS.InvokeVoidAsync("open", URLwasa, "_blank");
+
 	}
 
 	public void Volver()
