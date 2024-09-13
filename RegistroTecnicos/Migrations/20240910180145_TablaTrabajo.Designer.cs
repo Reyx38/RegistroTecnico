@@ -11,8 +11,8 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240912041226_Initial")]
-    partial class Initial
+    [Migration("20240910180145_TablaTrabajo")]
+    partial class TablaTrabajo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace RegistroTecnicos.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("RegistroTecnicos.Models.Clientes", b =>
+            modelBuilder.Entity("RegistroTecnicos.Models.Trabajos", b =>
                 {
                     b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
@@ -35,9 +35,17 @@ namespace RegistroTecnicos.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("TrabajoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TrabajosTrabajoId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ClienteId");
 
-                    b.ToTable("Clientes");
+                    b.HasIndex("TrabajosTrabajoId");
+
+                    b.ToTable("Trabajos");
                 });
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
@@ -84,9 +92,6 @@ namespace RegistroTecnicos.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ClienteId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Descripcion")
                         .HasMaxLength(250)
                         .HasColumnType("TEXT");
@@ -100,13 +105,23 @@ namespace RegistroTecnicos.Migrations
                     b.Property<int>("TecnicoId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("TecnicosTecnicoId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("TrabajoId");
 
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("TecnicoId");
+                    b.HasIndex("TecnicosTecnicoId");
 
                     b.ToTable("Trabajos");
+                });
+
+            modelBuilder.Entity("RegistroTecnicos.Models.Trabajos", b =>
+                {
+                    b.HasOne("RegistroTecnicos.Models.Trabajos", "Trabajos")
+                        .WithMany()
+                        .HasForeignKey("TrabajosTrabajoId");
+
+                    b.Navigation("Trabajos");
                 });
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
@@ -122,24 +137,11 @@ namespace RegistroTecnicos.Migrations
 
             modelBuilder.Entity("RegistroTecnicos.Models.Trabajos", b =>
                 {
-                    b.HasOne("RegistroTecnicos.Models.Clientes", "Cliente")
-                        .WithMany("Trabajos")
-                        .HasForeignKey("ClienteId");
-
                     b.HasOne("RegistroTecnicos.Models.Tecnicos", "Tecnicos")
                         .WithMany()
-                        .HasForeignKey("TecnicoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
+                        .HasForeignKey("TecnicosTecnicoId");
 
                     b.Navigation("Tecnicos");
-                });
-
-            modelBuilder.Entity("RegistroTecnicos.Models.Clientes", b =>
-                {
-                    b.Navigation("Trabajos");
                 });
 #pragma warning restore 612, 618
         }

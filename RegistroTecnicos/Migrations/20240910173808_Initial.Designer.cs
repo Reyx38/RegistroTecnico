@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroTecnicos.DAL;
 
@@ -10,9 +11,11 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20240910173808_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -89,25 +92,7 @@ namespace RegistroTecnicos.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Descripcion")
-                        .HasMaxLength(250)
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("Fecha")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double>("Monto")
-                        .HasColumnType("REAL");
-
-                    b.Property<int>("TecnicoId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TecnicosTecnicoId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("TrabajoId");
-
-                    b.HasIndex("TecnicosTecnicoId");
 
                     b.ToTable("Trabajos");
                 });
@@ -130,15 +115,6 @@ namespace RegistroTecnicos.Migrations
                         .IsRequired();
 
                     b.Navigation("TipoTecnico");
-                });
-
-            modelBuilder.Entity("RegistroTecnicos.Models.Trabajos", b =>
-                {
-                    b.HasOne("RegistroTecnicos.Models.Tecnicos", "Tecnicos")
-                        .WithMany()
-                        .HasForeignKey("TecnicosTecnicoId");
-
-                    b.Navigation("Tecnicos");
                 });
 #pragma warning restore 612, 618
         }

@@ -45,6 +45,7 @@ public class ClienteService(Contexto contexto)
 	public async Task<Clientes?> Buscar(int id)
 	{
 		return await _contexto.Clientes
+			.Include(t => t.ClienteId)
 			.AsNoTracking()
 			.FirstOrDefaultAsync(p => p.ClienteId == id);
 	}
@@ -52,6 +53,7 @@ public class ClienteService(Contexto contexto)
 	public async Task<List<Clientes>> Listar(Expression<Func<Clientes, bool>> criterio)
 	{
 		return await _contexto.Clientes
+			.Include(t => t.TrabajoId)
 			.AsNoTracking()
 			.Where(criterio)
 			.ToListAsync();

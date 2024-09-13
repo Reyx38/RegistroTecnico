@@ -1,8 +1,8 @@
 ﻿.Contenedor_detalles {
     position: absolute;
-    width: auto;
-    height: auto;
-    top: 60%;
+    width: 500px;
+    height: 350px;
+    top: 55%;
     left: 58%;
     transform: translate(-50%, -50%);
     padding: 35px;
