@@ -1,0 +1,40 @@
+﻿@page "/RegistroClientes/Details/{ClienteId:int}"
+@rendermode InteractiveServer
+@inject ClienteService CS
+@inject NavigationManager navigation
+<link rel="stylesheet" href="details.css" />
+
+<PageTitle>Detalles del cliente</PageTitle>
+
+@*Header*@
+<h2>Details</h2>
+@*Body*@
+<div class="Contenedor_detalles">
+	<h3>Detalles del cliente</h3>
+	<div class="list-details">
+		<ul>
+			<li><strong>Cliente Id:</strong> @Cliente.ClienteId</li>
+			<li><strong>Nombre del cliente:</strong> @Cliente.Nombres</li>
+			<li><strong>Numero de telefono:</strong> @Cliente.Telefono</li>
+		</ul>
+	</div>
+
+	<div class="btn-details">
+		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public int ClienteId { get; set; }
+	Clientes Cliente { get; set; } = new Clientes();
+	protected override async Task OnInitializedAsync()
+	{
+		Cliente = await CS.Buscar(ClienteId);
+	}
+
+	public void Volver()
+	{
+		navigation.NavigateTo("/RegistroClientes/index");
+	}
+}

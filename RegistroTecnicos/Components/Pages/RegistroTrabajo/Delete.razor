@@ -1,0 +1,57 @@
+﻿@page "/RegistroTrabajos/delete/{TrabajoId:int}"
+@rendermode InteractiveServer
+@inject TrabajoService WS
+@inject NavigationManager navigation
+<link href="eliminar.css" rel="stylesheet" />
+
+<PageTitle>Detalles del trabajo</PageTitle>
+
+@*Header*@
+
+<h2>Eliminar Trabajo</h2>
+@*Body*@
+<div class="Contenedor-eliminar">
+
+	<div class="list-eliminar">
+		<ul>
+			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.TrabajoId</li>
+			<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
+			<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
+			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
+			<li><strong>Hora de solicitud:</strong> @Trabajo.Fecha</li>
+			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
+			<li><strong>Monto:</strong> @Trabajo.Monto</li>
+		</ul>
+	</div>
+
+	<div class="alert alert-danger">
+		<label>¿Seguro que desea eliminar a este t&eacute;cnico?</label>
+	</div>
+
+	<div class="botones">
+		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar t&eacute;cnico</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public int TrabajoId { get; set; }
+	Trabajos Trabajo { get; set; } = new Trabajos();
+	protected override async Task OnInitializedAsync()
+	{
+		Trabajo = await WS.Buscar(TrabajoId);
+	}
+
+	public async Task eliminar()
+	{
+
+		await WS.Eliminar(Trabajo.TrabajoId);
+		navigation.NavigateTo("/RegistroTrabajos/index");
+
+	}
+	public void Volver()
+	{
+		navigation.NavigateTo("/RegistroTrabajos/index");
+	}
+}

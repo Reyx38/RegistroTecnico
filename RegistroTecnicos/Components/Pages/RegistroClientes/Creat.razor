@@ -1,0 +1,74 @@
+﻿@page "/RegistroClientes/Creat"
+@rendermode InteractiveServer
+@inject ClienteService CS
+@inject NavigationManager navigation
+
+<PageTitle>Crear Cliente</PageTitle>
+<h2>Crear nuevos Clientes</h2>
+
+<EditForm Model="@Cliente" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="Contenedor_Agregar">
+        <div class="Contenedor_Secundario">
+            <h3>Nuevo cliente</h3>
+
+            <div class="inputs-agregar">
+                <label>Nombres:</label>
+                <InputText @bind-Value="Cliente.Nombres" />
+                <ValidationMessage For="@(() => Cliente.Nombres)" />
+            </div>
+
+            <div class="inputs-agregar">
+                <label>Numero de telefono:</label>
+                <InputText @bind-Value="Cliente.Telefono" />
+                <ValidationMessage For="@(() => Cliente.Telefono)" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(Mensaje))
+            {
+                <div class="alert alert-danger">
+                    @Mensaje
+                </div>
+            }
+
+            <div class="Botones_agregar">
+                <button type="button" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square "> Volver</button>
+                <button type="submit" class="btn btn-success bi bi-floppy"> Guardar</button>
+            </div>
+        </div>
+
+    </div>
+
+</EditForm>
+
+@code {
+    public Clientes Cliente { get; set; } = new Clientes();
+    string Mensaje { get; set; } = string.Empty;
+
+
+    public async Task Guardar()
+    {
+        Mensaje = string.Empty;
+        if (string.IsNullOrWhiteSpace(Cliente.Nombres) || string.IsNullOrWhiteSpace(Cliente.Telefono))
+        {
+            Mensaje = "Por favor, complete todos los campos correctamente.";
+            return;
+        }
+
+        var nombreExiste = await CS.ExisteNombre(Cliente.Nombres);
+        if (nombreExiste)
+        {
+            Mensaje = "Ya existe un técnico con el mismo Nombres.";
+            return;
+        }
+
+        await CS.Guardar(Cliente);
+        navigation.NavigateTo("/index");
+    }
+    public void Volver()
+    {
+        navigation.NavigateTo("/index");
+    }
+}
