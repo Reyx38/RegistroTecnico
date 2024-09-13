@@ -12,12 +12,8 @@ public class Clientes
 	public string? Nombres { get; set; }
 
 	[Required(ErrorMessage = "Campo Obligatorio")]
-	[RegularExpression(@"(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}", ErrorMessage = "El numero de telefono no es valido")]
 	public string? Telefono { get; set; }
 
-	[ForeignKey("TrabajoId")]
-	public int TrabajoId { get; set;}
-
-	public Trabajos? Trabajos { get; set;}
+	public ICollection<Trabajos>? Trabajos { get; set; }
 
 }
