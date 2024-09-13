@@ -55,6 +55,7 @@ public class TiposTecnicosServices(Contexto contexto)
     {
         return await _contexto.TiposTecnicos
             .AsNoTracking()
-            .Where(criterio) .ToListAsync();
+            .Where(criterio) 
+            .ToListAsync();
     }
 }

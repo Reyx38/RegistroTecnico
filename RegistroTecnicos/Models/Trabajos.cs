@@ -11,13 +11,14 @@ public class Trabajos
 	[StringLength(250)]	
 	public string? Descripcion { get;set; }
 
-	public DateTime? Fecha { get; set; }
-	[Required (ErrorMessage ="Campo Obligatorio")]
+	public DateTime? Fecha { get; set; } = DateTime.Now;
+    [Required (ErrorMessage ="Campo Obligatorio")]
 	public double Monto { get; set; }
 
-	[ForeignKey("TecnicoId")]
+	[ForeignKey("Tecnicos")]
 	public int TecnicoId { get; set; }
-	public Tecnicos? Tecnicos { get; set; } 
+	public Tecnicos? Tecnicos { get; set; }
 
-
+    public int? ClienteId { get; set; }
+    public Clientes? Cliente { get; set; }
 }
