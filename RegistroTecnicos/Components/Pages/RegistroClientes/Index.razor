@@ -34,8 +34,7 @@
                 <tr>
                     <td class="text-center">@Cliente.ClienteId</td>
                     <td class="text-center">@Cliente.Nombres</td>
-                    <td class="text-center">@Cliente.Telefono</td>
-
+                    <td class="text-center">@String.Format("{0:(###) ###-####}", long.Parse(Cliente.Telefono))</td>
                     <td class="text-center">
                         <a href="/RegistroClientes/Details/@Cliente.ClienteId" class=" bi bi-eye"></a>
                     </td>
