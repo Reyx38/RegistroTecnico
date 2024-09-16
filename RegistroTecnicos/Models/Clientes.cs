@@ -9,7 +9,7 @@ public class Clientes
 
 	[Required(ErrorMessage = "Campo Obligatorio")]
 	[StringLength(50)]
-	[RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Solo se permiten letras.")]
+	[RegularExpression("^[a-zA-ZÀ-ÿ\\s]+$", ErrorMessage = "Solo se permiten letras.")]
 	public string? Nombres { get; set; }
 
 	[Required(ErrorMessage = "Campo Obligatorio")]
