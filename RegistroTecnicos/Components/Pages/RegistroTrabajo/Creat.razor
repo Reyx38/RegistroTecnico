@@ -31,7 +31,7 @@
                 <InputSelect @bind-Value="Trabajo.TecnicoId">
                     @foreach (var Tecnico in Tecnicos)
                     {
-                        <option value="@Tecnico.TecnicoId">@Tecnico.Nombres</option>
+                        <option value="@Tecnico.TecnicoId">@Tecnico.Nombres (@Tecnico.TipoTecnico?.Descripcion)</option>
                     }
                 </InputSelect>
             </div>
