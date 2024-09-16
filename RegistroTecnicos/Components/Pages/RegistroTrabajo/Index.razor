@@ -22,7 +22,9 @@
             <tr>
                 <th>Trabajo Id</th>
                 <th>Fecha</th>
+                <th>Client Id</th>
                 <th>Cliente</th>
+                <th>Tecnico Id</th>
                 <th>Tecnico</th>
                 <th>Descripci&oacute;n</th>
                 <th>Monto</th>
@@ -36,8 +38,10 @@
             {
                 <tr>
                     <td class="text-center">@Trabajo.TrabajoId</td>
-                    <td class="text-center">@Trabajo.Fecha</td>
+                    <td class="text-center">@Trabajo.Fecha?.ToString("dd/MM/yyyy")</td>
+                    <td class="text-center">@Trabajo.ClienteId</td>
                     <td class="text-center">@Trabajo.Cliente?.Nombres</td>
+                    <td class="text-center">@Trabajo.TecnicoId</td>
                     <td class="text-center">@Trabajo.Tecnicos?.Nombres</td>
                     <td class="text-center">@Trabajo.Descripcion</td>
                     <td class="text-center">@Trabajo.Monto $</td>
