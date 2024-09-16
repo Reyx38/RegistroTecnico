@@ -9,9 +9,12 @@ public class Clientes
 
 	[Required(ErrorMessage = "Campo Obligatorio")]
 	[StringLength(50)]
+	[RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Solo se permiten letras.")]
 	public string? Nombres { get; set; }
 
 	[Required(ErrorMessage = "Campo Obligatorio")]
+	[RegularExpression (@"^\d+$", ErrorMessage = "Solo se permiten números.")]
+	[StringLength(10)]
 	public string? Telefono { get; set; }
 
 	public ICollection<Trabajos>? Trabajos { get; set; }
