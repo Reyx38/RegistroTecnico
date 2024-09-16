@@ -16,7 +16,7 @@
 		<ul>
 			<li><strong>Cliente Id:</strong> @Cliente.ClienteId</li>
 			<li><strong>Nombre del cliente:</strong> @Cliente.Nombres</li>
-			<li><strong>Numero de telefono:</strong> @Cliente.Telefono</li>
+			<li><strong>Numero de telefono:</strong> @String.Format("{0:(###) ###-####}", long.Parse(Cliente.Telefono))</li>
 		</ul>
 	</div>
 
