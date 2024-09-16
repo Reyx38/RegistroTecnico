@@ -44,16 +44,11 @@
     public async Task Guardar()
     {
         Mensaje = string.Empty; 
-        if (string.IsNullOrWhiteSpace(TipoTecnicos.Descripcion))
-        {
-            Mensaje = "Por favor, complete todos los campos correctamente.";
-            return;
-        }
 
         var nombreExiste = await TTS.ExisteDescripcion(TipoTecnicos.Descripcion);
         if (nombreExiste)
         {
-            Mensaje = "Ya existe Este tipo de técnico con el mismo Nombres.";
+            Mensaje = "Ya existe Este tipo de técnico .";
             return;
         }
 
