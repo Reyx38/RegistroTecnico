@@ -18,6 +18,7 @@
             <div class="inputs-agregar">
                 <label>Cual es el cliente?:</label>
                 <InputSelect @bind-Value="Trabajo.ClienteId">
+                    <option ="" selected disabled>Elija una opci&oacute;n</option>
                     @foreach (var Cliente in Clientes)
                     {
                         <option value="@Cliente.ClienteId">@Cliente.Nombres</option>
