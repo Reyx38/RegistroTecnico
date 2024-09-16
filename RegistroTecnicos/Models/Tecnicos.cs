@@ -7,9 +7,14 @@ public class Tecnicos
     [Key]
     public int TecnicoId { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
-    public string? Nombres { get; set; }
-    [Range(0.01, double.MaxValue, ErrorMessage = "El sueldo por hora debe ser mayor a 0.")]
-    public double SueldoHora { get; set; }
+    [StringLength(50)]
+	[RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Solo se permiten letras.")]
+	public string? Nombres { get; set; }
+
+	[Required(ErrorMessage = "Campo obligatorio")]
+	[Range(0.01, double.MaxValue, ErrorMessage = "El sueldo por hora debe ser mayor a 0.")]
+	[RegularExpression(@"^\d+$", ErrorMessage = "Solo se permiten números.")]
+	public double SueldoHora { get; set; }
 
     [ForeignKey("TipoTecnico")] 
     [Required(ErrorMessage = "Debe seleccionar un tipo")]
