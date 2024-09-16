@@ -17,7 +17,7 @@
 		<h2>Modificar</h2>
 
 		<div>
-			<label>Trabajo Id: @Trabajo.TecnicoId</label>
+			<label>Trabajo Id: @Trabajo.TrabajoId</label>
 		</div>
 
 		<div class="inputs-agregar">
@@ -28,6 +28,8 @@
                         <option value="@Cliente.ClienteId">@Cliente.Nombres</option>
                     }
                 </InputSelect>
+			<ValidationMessage For="@(() => Trabajo.ClienteId)" />
+
             </div>
 			
             <div class="inputs-agregar">
@@ -37,7 +39,7 @@
 
 		<div class="Inputs-text">
 			<label>Seleccionar T&eacute;cnico:</label>
-			<InputSelect @bind-Value="@Trabajo.TecnicoId">
+			<InputSelect @bind-Value="Trabajo.TecnicoId">
 				@foreach (var Tecnico in Tecnicos)
 				{
 					<option value="@Tecnico.TecnicoId">@Tecnico.Nombres</option>
@@ -48,13 +50,13 @@
 
 		<div class="Inputs-text">
 			<label>Nombre:</label>
-			<input type="text" @bind-value="@Trabajo.Descripcion" />
+			<input type="text" @bind-value="Trabajo.Descripcion" />
 			<ValidationMessage For="@(() => Trabajo.Descripcion)" />
 		</div>
 
 		<div class="Inputs-text">
 			<label>Monto:</label>
-			<input type="text" @bind-value="@Trabajo.Monto" />
+			<input type="text" @bind-value="Trabajo.Monto" />
 			<ValidationMessage For="@(() => Trabajo.Monto)" />
 
 		</div>
