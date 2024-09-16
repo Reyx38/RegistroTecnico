@@ -50,17 +50,11 @@
 
     public async Task Guardar()
     {
-        Mensaje = string.Empty;
-        if (string.IsNullOrWhiteSpace(Cliente.Nombres) || string.IsNullOrWhiteSpace(Cliente.Telefono))
-        {
-            Mensaje = "Por favor, complete todos los campos correctamente.";
-            return;
-        }
 
         var nombreExiste = await CS.ExisteNombre(Cliente.Nombres);
         if (nombreExiste)
         {
-            Mensaje = "Ya existe un técnico con el mismo Nombres.";
+            Mensaje = "Ya existe un cliente con el mismo Nombres.";
             return;
         }
 
