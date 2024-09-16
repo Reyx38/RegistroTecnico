@@ -26,9 +26,11 @@
                 </InputSelect>
             </div>
 
-            <div class="inputs-agregar">
+            <div class="inputs-agregar"> 
                 <label>Eliga el T&eacute;cnico para el trabajo:</label>
-                <InputSelect @bind-Value="Trabajo.TecnicoId">
+
+                <InputSelect class = "select"@bind-Value="Trabajo.TecnicoId">
+                    <option ="" selected disabled>Elija una opci&oacute;n</option>
                     @foreach (var Tecnico in Tecnicos)
                     {
                         <option value="@Tecnico.TecnicoId">@Tecnico.Nombres (@Tecnico.TipoTecnico?.Descripcion)</option>
