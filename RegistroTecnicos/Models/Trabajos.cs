@@ -10,10 +10,14 @@ public class Trabajos
 
 	[StringLength(250)]
 	[Required (ErrorMessage ="Campo obligatario")]
+	[RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Solo se permiten letras.")]
 	public string? Descripcion { get;set; }
 
 	public DateTime? Fecha { get; set; } = DateTime.Now;
+
     [Required (ErrorMessage ="Campo Obligatorio")]
+	[Range(0.01, double.MaxValue, ErrorMessage = "El sueldo por hora debe ser mayor a 0.")]
+	[RegularExpression(@"^\d+$", ErrorMessage = "Solo se permiten números.")]
 	public double Monto { get; set; }
 
 	[ForeignKey("Tecnicos")]
