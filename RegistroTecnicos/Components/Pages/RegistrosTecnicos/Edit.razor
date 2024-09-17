@@ -37,7 +37,7 @@
 		</div>
 
 		<div class="Inputs-text">
-			<label>@Tecnico.TipoTecnicoId:</label>
+			<label>Sueldo Hora:</label>
 			<input type="text" @bind-value="Tecnico.SueldoHora" />
 			<ValidationMessage For="@(() => Tecnico.SueldoHora)" />
 
@@ -71,6 +71,7 @@
 	{
 
 		await tecnicoServices.Guardar(Tecnico);
+		navigation.NavigateTo("/index");
 
 	}
 	public void Volver()

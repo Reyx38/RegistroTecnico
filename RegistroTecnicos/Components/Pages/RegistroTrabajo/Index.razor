@@ -1,6 +1,6 @@
 ﻿@page "/RegistroTrabajos/index"
 @rendermode InteractiveServer
-@inject TrabajoService WS
+@inject TrabajoService trabajoService
 @inject NavigationManager navigation
 <link rel="stylesheet" href="index.css" />
 
@@ -44,7 +44,7 @@
                     <td class="text-center">@Trabajo.TecnicoId</td>
                     <td class="text-center">@Trabajo.Tecnicos?.Nombres</td>
                     <td class="text-center">@Trabajo.Descripcion</td>
-                    <td class="text-center">@Trabajo.Monto $</td>
+                    <td class="text-center">@Trabajo.Monto.ToString("#.00") $</td>
                     <td class="text-center">
                         <a href="/RegistroTrabajos/details/@Trabajo.TrabajoId" class=" bi bi-eye"></a>
                     </td>
@@ -69,7 +69,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Trabajo = await WS.Listar(a => true);
+        Trabajo = await trabajoService.Listar(a => true);
     }
 
     public void goToCreat()
@@ -78,7 +78,7 @@
     }
     public async void Buscar()
     {
-        if (Id <= 0 || !await WS.ExisteId(Id))
+        if (Id <= 0 || !await trabajoService.ExisteId(Id))
         {
             return;
         }
