@@ -18,7 +18,7 @@ namespace RegistroTecnicos.Migrations
                     ClienteId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombres = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
-                    Telefono = table.Column<string>(type: "TEXT", nullable: false)
+                    Telefono = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +31,7 @@ namespace RegistroTecnicos.Migrations
                 {
                     TipoDeTecnicosId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Descripcion = table.Column<string>(type: "TEXT", nullable: false)
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,7 +44,7 @@ namespace RegistroTecnicos.Migrations
                 {
                     TecnicoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombres = table.Column<string>(type: "TEXT", nullable: false),
+                    Nombres = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     SueldoHora = table.Column<double>(type: "REAL", nullable: false),
                     TipoTecnicoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -65,11 +65,11 @@ namespace RegistroTecnicos.Migrations
                 {
                     TrabajoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
                     Fecha = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Monto = table.Column<double>(type: "REAL", nullable: false),
                     TecnicoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ClienteId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ClienteId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,7 +78,8 @@ namespace RegistroTecnicos.Migrations
                         name: "FK_Trabajos_Clientes_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
-                        principalColumn: "ClienteId");
+                        principalColumn: "ClienteId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Trabajos_Tecnicos_TecnicoId",
                         column: x => x.TecnicoId,
