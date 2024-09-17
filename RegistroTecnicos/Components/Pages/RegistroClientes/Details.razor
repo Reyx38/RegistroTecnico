@@ -1,6 +1,6 @@
 ﻿@page "/RegistroClientes/Details/{ClienteId:int}"
 @rendermode InteractiveServer
-@inject ClienteService CS
+@inject ClienteService clienteService
 @inject NavigationManager navigation
 <link rel="stylesheet" href="details.css" />
 
@@ -30,7 +30,7 @@
 	Clientes Cliente { get; set; } = new Clientes();
 	protected override async Task OnInitializedAsync()
 	{
-		Cliente = await CS.Buscar(ClienteId);
+		Cliente = await clienteService.Buscar(ClienteId);
 	}
 
 	public void Volver()

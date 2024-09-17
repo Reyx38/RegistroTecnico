@@ -1,6 +1,6 @@
 ﻿@page "/TiposTecnicos/RegistroTipos"
 @rendermode InteractiveServer
-@inject TiposTecnicosServices TTS
+@inject TiposTecnicosServices tipoTecnicoServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="index.css" />
 
@@ -56,7 +56,7 @@
     int Id { get; set; } = 0;
     protected override async Task OnInitializedAsync()
     {
-        TipoTecnicos = await TTS.Listar(a => true);
+        TipoTecnicos = await tipoTecnicoServices.Listar(a => true);
     }
 
     public void goToCreat()
@@ -65,7 +65,7 @@
     }
     public async void Buscar()
     {
-        if (Id <= 0 || !await TTS.ExisteId(Id))
+        if (Id <= 0 || !await tipoTecnicoServices.ExisteId(Id))
         {
             return;
         }

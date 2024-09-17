@@ -1,6 +1,6 @@
 ﻿@page "/index"
 @rendermode InteractiveServer
-@inject TecnicosServices TS
+@inject TecnicosServices tecnicoServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="index.css" />
 
@@ -35,8 +35,8 @@
                     <tr>
                         <td class="text-center">@Tecnico.TecnicoId</td>
                         <td class="text-center">@Tecnico.Nombres</td>
-                        <td class="text-center">@Tecnico.TipoTecnico.Descripcion</td>
-                        <td class="text-center">@Tecnico.SueldoHora $</td>
+                        <td class="text-center">@Tecnico.TipoTecnico?.Descripcion</td>
+                        <td class="text-center">@Tecnico.SueldoHora.ToString("#.00") $</td>
 
                         <td class="text-center">
                             <a href="/index/details/@Tecnico.TecnicoId" class=" bi bi-eye"></a>
@@ -62,7 +62,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Tecnicos =  await TS.Listar(a => true);
+        Tecnicos = await tecnicoServices.Listar(a => true);
     }
 
     public void goToCreat()
@@ -71,7 +71,7 @@
     }
     public async void Buscar()
     {
-        if(Id <= 0 || !await TS.ExisteId(Id))
+        if (Id <= 0 || !await tecnicoServices.ExisteId(Id))
         {
             return;
         }

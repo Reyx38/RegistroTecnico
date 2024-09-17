@@ -1,6 +1,6 @@
 ﻿@page "/TiposTecnicos/RegistroTipos/Modificar/{TipoDeTecnicoId:int}"
 @rendermode InteractiveServer
-@inject TiposTecnicosServices TTS
+@inject TiposTecnicosServices tipoTecnicoServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="modificar.css" />
 
@@ -40,13 +40,13 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		TipoTecnico = await TTS.Buscar(TipoDeTecnicoId);
+		TipoTecnico = await tipoTecnicoServices.Buscar(TipoDeTecnicoId);
 	}
 
 	public async Task Guardar()
 	{
 
-		await TTS.Guardar(TipoTecnico);
+		await tipoTecnicoServices.Guardar(TipoTecnico);
 		navigation.NavigateTo("/TiposTecnicos/RegistroTipos");
 
 	}

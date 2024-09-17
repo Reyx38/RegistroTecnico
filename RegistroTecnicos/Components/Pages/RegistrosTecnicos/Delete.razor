@@ -1,6 +1,6 @@
 ﻿@page "/index/eliminar/{tecnicoId:int}"
 @rendermode InteractiveServer
-@inject TecnicosServices TS
+@inject TecnicosServices tecnicoServices
 @inject NavigationManager navigation
 <link href="eliminar.css" rel="stylesheet" />
 
@@ -16,8 +16,8 @@
 	<ul>
 		<li><strong>T&eacute;cnico Id:</strong> @Tecnico.TecnicoId</li>
 		<li><strong>Nombre del t&eacute;cnico:</strong> @Tecnico.Nombres</li>
-		<li><strong>Descripci&oacute;n del t&eacute;cnico:</strong> @Tecnico.TipoTecnico.Descripcion</li>
-		<li><strong>Sueldo por hora:</strong> @Tecnico.SueldoHora</li>
+		<li><strong>Descripci&oacute;n del t&eacute;cnico:</strong> @Tecnico.TipoTecnico?.Descripcion</li>
+			<li><strong>Sueldo por hora:</strong> @Tecnico.SueldoHora.ToString("#.00") $</li>
 	</ul>
     </div>
 
@@ -39,13 +39,13 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		Tecnico = await TS.Buscar(TecnicoId);
+		Tecnico = await tecnicoServices.Buscar(TecnicoId);
 	}
 
 	public async Task eliminar()
 	{
 
-		await TS.Eliminar(Tecnico.TecnicoId);
+		await tecnicoServices.Eliminar(Tecnico.TecnicoId);
 		navigation.NavigateTo("/index");
 
 	}

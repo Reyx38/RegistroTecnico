@@ -1,6 +1,6 @@
 ﻿@page "/RegistroClientes/Delete/{ClienteId:int}"
 @rendermode InteractiveServer
-@inject ClienteService CS
+@inject ClienteService clienteService
 @inject NavigationManager navigation
 <link href="eliminar.css" rel="stylesheet" />
 
@@ -21,12 +21,12 @@
 	</div>
 
 	<div class="alert alert-danger">
-		<label>¿Seguro que desea eliminar a este t&eacute;cnico?</label>
+		<label>¿Seguro que desea eliminar a este cliente?</label>
 	</div>
 
 	<div class="botones">
 		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
-		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar t&eacute;cnico</button>
+		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar cliente</button>
 	</div>
 
 
@@ -38,13 +38,13 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		Cliente = await CS.Buscar(ClienteId);
+		Cliente = await clienteService.Buscar(ClienteId);
 	}
 
 	public async Task eliminar()
 	{
 
-		await CS.Eliminar(Cliente.ClienteId);
+		await clienteService.Eliminar(Cliente.ClienteId);
 		navigation.NavigateTo("/RegistroClientes/index");
 
 	}

@@ -1,7 +1,7 @@
 ﻿@page "/RegistroTrabajos/Creat"
 @rendermode InteractiveServer
 @inject TrabajoService WS
-@inject TecnicosServices TS
+@inject TecnicosServices tecnicoServices
 @inject ClienteService CS
 @inject NavigationManager navigation
 
@@ -18,7 +18,7 @@
             <div class="inputs-agregar">
                 <label>Cual es el cliente?:</label>
                 <InputSelect @bind-Value="Trabajo.ClienteId">
-                    <option ="" selected disabled>Elija una opci&oacute;n</option>
+                    <option ="0" selected disabled>Elija una opci&oacute;n</option>
                     @foreach (var Cliente in Clientes)
                     {
                         <option value="@Cliente.ClienteId">@Cliente.Nombres</option>
@@ -30,7 +30,7 @@
                 <label>Eliga el T&eacute;cnico para el trabajo:</label>
 
                 <InputSelect class = "select"@bind-Value="Trabajo.TecnicoId">
-                    <option ="" selected disabled>Elija una opci&oacute;n</option>
+                    <option ="0" selected disabled>Elija una opci&oacute;n</option>
                     @foreach (var Tecnico in Tecnicos)
                     {
                         <option value="@Tecnico.TecnicoId">@Tecnico.Nombres (@Tecnico.TipoTecnico?.Descripcion)</option>
@@ -82,7 +82,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Tecnicos = await TS.Listar(a => true);
+        Tecnicos = await tecnicoServices.Listar(a => true);
         Clientes = await CS.Listar(a => true);
     }
     public async Task Guardar()

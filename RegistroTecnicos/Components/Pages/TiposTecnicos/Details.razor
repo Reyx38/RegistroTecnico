@@ -1,6 +1,6 @@
 ﻿@page "/TiposTecnicos/RegistroTipos/details/{TipoDeTecnicoId:int}"
 @rendermode InteractiveServer
-@inject TiposTecnicosServices TTS
+@inject TiposTecnicosServices tipoTecnicoServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="details.css" />
 
@@ -29,7 +29,7 @@
 	TiposTecnicos TipoTecnico { get; set; } = new TiposTecnicos();
 	protected override async Task OnInitializedAsync()
 	{
-		TipoTecnico = await TTS.Buscar(TipoDeTecnicoId);
+		TipoTecnico = await tipoTecnicoServices.Buscar(TipoDeTecnicoId);
 	}
 
 	public void Volver()

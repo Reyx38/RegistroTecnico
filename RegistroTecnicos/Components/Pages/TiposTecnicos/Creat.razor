@@ -1,6 +1,6 @@
 ﻿@page "/TiposTecnicos/RegistroTipos/Creat"
 @rendermode InteractiveServer 
-@inject TiposTecnicosServices TTS
+@inject TiposTecnicosServices tipoTecnicoServices
 @inject NavigationManager navigation
 
 <PageTitle>Crear tipo de técnicos</PageTitle>
@@ -45,14 +45,14 @@
     {
         Mensaje = string.Empty; 
 
-        var nombreExiste = await TTS.ExisteDescripcion(TipoTecnicos.Descripcion);
+        var nombreExiste = await tipoTecnicoServices.ExisteDescripcion(TipoTecnicos.Descripcion);
         if (nombreExiste)
         {
             Mensaje = "Ya existe Este tipo de técnico .";
             return;
         }
 
-        await TTS.Guardar(TipoTecnicos);
+        await tipoTecnicoServices.Guardar(TipoTecnicos);
         navigation.NavigateTo("/TiposTecnicos/RegistroTipos");
     }
 	public void Volver()

@@ -25,7 +25,7 @@ public class TecnicosServices(Contexto contexto)
 
     private async Task<bool> Modificar(Tecnicos tecnicos)
     {
-        _contexto.Update(tecnicos);
+        _contexto.Update(tecnicos).Reference(t => t.TipoTecnico);
         return await _contexto.SaveChangesAsync() > 0;
     }
 
@@ -48,7 +48,6 @@ public class TecnicosServices(Contexto contexto)
     {
         return await _contexto.Tecnicos
 			.Include(t => t.TipoTecnico)
-			.AsNoTracking()
             .FirstOrDefaultAsync(p => p.TecnicoId == id);
     }
 
