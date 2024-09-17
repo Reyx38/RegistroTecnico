@@ -1,7 +1,7 @@
 ﻿@page "/RegistroTrabajos/details/{TrabajoId:int}"
 @rendermode InteractiveServer
-@inject TrabajoService WS
-@inject IJSRuntime JS
+@inject TrabajoService trabajoService
+@inject IJSRuntime runTime
 @inject NavigationManager navigation
 <link rel="stylesheet" href="details.css" />
 
@@ -14,12 +14,12 @@
 	<h3>Detalles del trabajo</h3>
 	<div class="list-details">
 		<ul>
-			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.Cliente</li>
+			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.TrabajoId</li>
 			<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
 			<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
 			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
-			<li><strong>Hora de solicitud:</strong> @Trabajo.Fecha</li>
-			<li><strong>Monto:</strong> @Trabajo.Monto</li>
+			<li><strong>fecha de solicitud:</strong> @Trabajo.Fecha?.ToString("dd/MM/yyyy")</li>
+			<li><strong>Monto:</strong> @Trabajo.Monto.ToString("#.00")</li>
 		</ul>
 	</div>
 
@@ -33,19 +33,20 @@
 	[Parameter]
 	public int TrabajoId { get; set; }
 	Trabajos Trabajo { get; set; } = new Trabajos();
+
 	protected override async Task OnInitializedAsync()
 	{
-		Trabajo = await WS.Buscar(TrabajoId);
+		Trabajo = await trabajoService.Buscar(TrabajoId);
 	}
 
-	public async void Terminar()
+	public async Task Terminar()
 	{
 
 		string mensaje = $"La solicitud {Trabajo.Descripcion} ha sido realizada de manera existosa, espero seguir colaborando con usted";
 		string codificacion = Uri.EscapeDataString(mensaje);
-		String URLwasa = $"https://wa.me/+{Trabajo.Cliente.Telefono}?text={codificacion}";
+		String URLwasa = $"https://wa.me/+{Trabajo.Cliente?.Telefono}?text={codificacion}";
 
-		await JS.InvokeVoidAsync("open", URLwasa, "_blank");
+		await runTime.InvokeVoidAsync("open", URLwasa, "_blank");
 
 	}
 

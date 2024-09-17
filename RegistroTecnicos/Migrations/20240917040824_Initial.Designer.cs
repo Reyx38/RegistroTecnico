@@ -11,7 +11,7 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240912041226_Initial")]
+    [Migration("20240917040824_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,6 +33,7 @@ namespace RegistroTecnicos.Migrations
 
                     b.Property<string>("Telefono")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ClienteId");
@@ -48,6 +49,7 @@ namespace RegistroTecnicos.Migrations
 
                     b.Property<string>("Nombres")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<double>("SueldoHora")
@@ -71,6 +73,7 @@ namespace RegistroTecnicos.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.HasKey("TipoDeTecnicosId");
@@ -85,9 +88,11 @@ namespace RegistroTecnicos.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("ClienteId")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("TEXT");
 
@@ -124,7 +129,9 @@ namespace RegistroTecnicos.Migrations
                 {
                     b.HasOne("RegistroTecnicos.Models.Clientes", "Cliente")
                         .WithMany("Trabajos")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RegistroTecnicos.Models.Tecnicos", "Tecnicos")
                         .WithMany()

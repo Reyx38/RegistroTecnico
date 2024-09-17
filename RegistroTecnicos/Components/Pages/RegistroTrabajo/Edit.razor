@@ -1,8 +1,8 @@
 ﻿@page "/RegistroTrabajos/Modificar/{trabajoId:int}"
 @rendermode InteractiveServer
-@inject TrabajoService WS
-@inject ClienteService CS
-@inject TecnicosServices TS
+@inject TrabajoService trabajoService
+@inject ClienteService clienteService
+@inject TecnicosServices tecnicoServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="modificar.css" />
 
@@ -22,7 +22,7 @@
 
 		<div class="inputs-agregar">
                 <label>Cual es el cliente?:</label>
-                <InputSelect @bind-Value="Trabajo.ClienteId" readonly>
+                <InputSelect @bind-Value="Trabajo.ClienteId" >
                     @foreach (var Cliente in Clientes)
                     {
                         <option value="@Cliente.ClienteId">@Cliente.Nombres</option>
@@ -83,13 +83,13 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		Trabajo = await WS.Buscar(TrabajoId);
-		Tecnicos = await TS.Listar(a => true);
-		Clientes = await CS.Listar(a => true);
+		Trabajo = await trabajoService.Buscar(TrabajoId);
+		Tecnicos = await tecnicoServices.Listar(a => true);
+		Clientes = await clienteService.Listar(a => true);
 	}
 	public async Task Guardar()
 	{
-		await WS.Guardar(Trabajo);
+		await trabajoService.Guardar(Trabajo);
 		navigation.NavigateTo("/RegistroTrabajos/index");
 
 	}

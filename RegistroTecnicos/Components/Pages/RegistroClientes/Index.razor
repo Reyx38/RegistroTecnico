@@ -1,6 +1,6 @@
 ﻿@page "/RegistroClientes/index"
 @rendermode InteractiveServer
-@inject ClienteService CS
+@inject ClienteService clienteService
 @inject NavigationManager navigation
 <link rel="stylesheet" href="index.css" />
 
@@ -59,7 +59,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Cliente = await CS.Listar(a => true);
+        Cliente = await clienteService.Listar(a => true);
     }
 
     public void goToCreat()
@@ -68,7 +68,7 @@
     }
     public async void Buscar()
     {
-        if (Id <= 0 || !await CS.ExisteId(Id))
+        if (Id <= 0 || !await clienteService.ExisteId(Id))
         {
             return;
         }

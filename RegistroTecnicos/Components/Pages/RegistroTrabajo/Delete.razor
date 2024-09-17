@@ -1,6 +1,6 @@
 ﻿@page "/RegistroTrabajos/delete/{TrabajoId:int}"
 @rendermode InteractiveServer
-@inject TrabajoService WS
+@inject TrabajoService trabajoService
 @inject NavigationManager navigation
 <link href="eliminar.css" rel="stylesheet" />
 
@@ -14,23 +14,22 @@
 
 	<div class="list-eliminar">
 		<ul>
-			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.TrabajoId</li>
+			<li><strong>Trabajo Id:</strong> @Trabajo.TrabajoId</li>
 			<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
 			<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
 			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
-			<li><strong>Hora de solicitud:</strong> @Trabajo.Fecha</li>
-			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
-			<li><strong>Monto:</strong> @Trabajo.Monto</li>
+			<li><strong>Hora de solicitud:</strong> @Trabajo.Fecha?.ToString("dd/MM/yyyy")</li>
+			<li><strong>Monto:</strong> @Trabajo.Monto.ToString("#.00")</li>
 		</ul>
 	</div>
 
 	<div class="alert alert-danger">
-		<label>¿Seguro que desea eliminar a este t&eacute;cnico?</label>
+		<label>¿Seguro que desea eliminar a este trabajo?</label>
 	</div>
 
 	<div class="botones">
 		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
-		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar t&eacute;cnico</button>
+		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar trabajo</button>
 	</div>
 </div>
 
@@ -40,13 +39,13 @@
 	Trabajos Trabajo { get; set; } = new Trabajos();
 	protected override async Task OnInitializedAsync()
 	{
-		Trabajo = await WS.Buscar(TrabajoId);
+		Trabajo = await trabajoService.Buscar(TrabajoId);
 	}
 
 	public async Task eliminar()
 	{
 
-		await WS.Eliminar(Trabajo.TrabajoId);
+		await trabajoService.Eliminar(Trabajo.TrabajoId);
 		navigation.NavigateTo("/RegistroTrabajos/index");
 
 	}
