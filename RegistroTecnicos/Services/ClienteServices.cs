@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace RegistroTecnicos.Services;
 
-public class ClienteService(Contexto contexto)
+public class ClienteServices(Contexto contexto)
 {
 	private readonly Contexto _contexto = contexto;
 	public async Task<bool> ExisteNombre(String nombre)
