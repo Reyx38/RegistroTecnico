@@ -47,7 +47,6 @@ public class TrabajoService(Contexto contexto)
 		return await _contexto.Trabajos
 			.Include(t => t.Tecnicos)
 			.Include(c => c.Cliente)
-			.AsNoTracking()
 			.FirstOrDefaultAsync(p => p.TrabajoId == id);
 	}
 

@@ -45,7 +45,6 @@ public class ClienteService(Contexto contexto)
 	public async Task<Clientes?> Buscar(int id)
 	{
 		return await _contexto.Clientes
-			.AsNoTracking()
 			.FirstOrDefaultAsync(p => p.ClienteId == id);
 	}
 
