@@ -9,7 +9,7 @@ public class Contexto(DbContextOptions<Contexto> options) : DbContext(options)
 	public DbSet<TiposTecnicos> TiposTecnicos { get; set; }
 	public DbSet<Clientes> Clientes { get; set; }
 	public DbSet<Trabajos> Trabajos { get; set; }
-    public DbSet<Prioridades> Prioridades { get; set; }
+	public DbSet<Prioridades> Prioridades { get; set; }
 
 }
 
