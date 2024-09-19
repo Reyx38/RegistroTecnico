@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RegistroTecnicos.Models;
 public class Clientes
@@ -13,7 +12,7 @@ public class Clientes
 	public string? Nombres { get; set; }
 
 	[Required(ErrorMessage = "Campo Obligatorio")]
-	[RegularExpression (@"^\d+$", ErrorMessage = "Solo se permiten números.")]
+	[RegularExpression(@"^\d+$", ErrorMessage = "Solo se permiten números.")]
 	[StringLength(10)]
 	public string? Telefono { get; set; }
 
