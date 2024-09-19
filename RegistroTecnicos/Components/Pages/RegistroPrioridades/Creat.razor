@@ -1,0 +1,68 @@
+﻿@page "/RegistroPrioridades/Creat"
+@rendermode InteractiveServer
+@inject PrioridadesServices PrioridadeServices
+@inject NavigationManager navigation
+
+<PageTitle>Crear prioridades</PageTitle>
+<h2>Crear nueva prioridad</h2>
+
+<EditForm Model="Prioridades" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="Contenedor_Agregar">
+        <div class="Contenedor_Secundario">
+            <h3>Nueva prioridad</h3>
+
+            <div class="inputs-agregar">
+                <label>Nombres:</label>
+                <InputText @bind-Value="Prioridades.Descripcion" />
+                <ValidationMessage For="@(() => Prioridades.Descripcion)" />
+            </div>
+
+            <div class="inputs-agregar">
+                <label>Tiempo:</label>
+                <InputNumber @bind-Value="Prioridades.Tiempo" />
+                <ValidationMessage For="@(() => Prioridades.Tiempo)" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(Mensaje))
+            {
+                <div class="alert alert-danger">
+                    @Mensaje
+                </div>
+            }
+
+            <div class="Botones_agregar">
+                <button type="button" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square "> Volver</button>
+                <button type="submit" class="btn btn-success bi bi-floppy"> Guardar</button>
+            </div>
+        </div>
+
+    </div>
+
+</EditForm>
+
+@code {
+    public Prioridades Prioridades { get; set; } = new Prioridades();
+    string Mensaje { get; set; } = string.Empty;
+
+
+    public async Task Guardar()
+    {
+
+        var nombreExiste = await PrioridadeServices.ExisteDescripcion(Prioridades.Descripcion);
+        if (nombreExiste)
+        {
+            Mensaje = "Ya existe un cliente con el mismo Nombres.";
+            return;
+        }
+
+        await PrioridadeServices.Guardar(Prioridades);
+        navigation.NavigateTo("/RegistroPrioridad/Index");
+    }
+    public void Volver()
+    {
+        navigation.NavigateTo("/RegistroPrioridad/Index");
+    }
+}

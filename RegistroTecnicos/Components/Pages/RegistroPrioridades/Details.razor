@@ -1,0 +1,41 @@
+﻿@page "/RegistroPrioridad/details/{PrioridadId:int}"
+@rendermode InteractiveServer
+@inject PrioridadesServices PrioridadeServices
+@inject NavigationManager navigation
+<link rel="stylesheet" href="details.css" />
+
+<PageTitle>Detalles de prioridades</PageTitle>
+
+@*Header*@
+<h2>Details</h2>
+@*Body*@
+<div class="Contenedor_detalles">
+	<h3>Detalles de la prioridad</h3>
+	<div class="list-details">
+		<ul>
+			<li><strong>Prioridad Id:</strong> @Prioridad.PrioridadId</li>
+			<li><strong>Descripci&oacute;n:</strong> @Prioridad.Descripcion</li>
+			<li><strong>Tiempo:</strong> @Prioridad.Tiempo</li>
+
+		</ul>
+	</div>
+
+	<div class="btn-details">
+		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public int PrioridadId { get; set; }
+	Prioridades Prioridad { get; set; } = new Prioridades();
+	protected override async Task OnInitializedAsync()
+	{
+		Prioridad = await PrioridadeServices.Buscar(PrioridadId);
+	}
+
+	public void Volver()
+	{
+		navigation.NavigateTo("/RegistroPrioridad/Index");
+	}
+}

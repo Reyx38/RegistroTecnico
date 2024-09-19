@@ -1,6 +1,7 @@
 ﻿@page "/RegistroTrabajos/Modificar/{trabajoId:int}"
 @rendermode InteractiveServer
-@inject TrabajoServices trabajoServiClienteServicesienteService clienteService
+@inject ClienteServices clienteService
+@inject TrabajoServices trabajoService
 @inject TecnicosServices tecnicoServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="modificar.css" />

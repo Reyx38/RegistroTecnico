@@ -1,0 +1,80 @@
+﻿@page "/RegistroPrioridad/Index"
+@rendermode InteractiveServer
+@inject PrioridadesServices prioridadesServices
+@inject NavigationManager navigation
+
+<PageTitle>Registro de prioridades</PageTitle>
+@*Header*@
+<h2>Registro priodades</h2>
+<div class="col-md-6">
+    <label class="form-label"><strong>b&uacute;squeda por id:</strong></label>
+    <div class="input-group">
+        <input type="number" id="valorFiltro" @bind="Id" class="form-control" placeholder="Buscar por id" />
+        <button @onclick="Buscar" class="btn btn-success bi bi-search" type="button"> Buscar</button>
+    </div>
+</div>
+
+@*Body*@
+<div class="card-body">
+    <table class="table table-light">
+        <thead class="table table-striped text-center table-bordered mt-3 ">
+            <tr>
+                <th>Prioridades Id</th>
+                <th>Descripci&oacute;n</th>
+				<th>Tiempo</th>
+                <th>Detalles</th>
+				<th>Modificar</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prioridades in ListPrioridades)
+            {
+                <tr>
+                    <td class="text-center">@prioridades.PrioridadId</td>
+                    <td class="text-center">@prioridades.Descripcion</td>
+                    <td class="text-center">@prioridades.Tiempo</td>
+                    <td class="text-center">
+                        <a href="/RegistroPrioridad/details/@prioridades.PrioridadId" class="bi bi-eye"></a>
+                    </td>
+                    <td class="text-center">
+                        <a href="/RegistroPrioridad/edit/@prioridades.PrioridadId" class="bi bi-pencil-square"></a>
+                    </td>
+                    <td class="text-center">
+                        <a href="/RegistroPrioridades/Delete/@prioridades.PrioridadId" class="bi bi-trash"></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="crear-nuevo">
+        <button type="submit" @onclick="goToCreat" class="btn btn-success bi bi-floppy"> Crear nuevo </button>
+    </div>
+</div>
+
+@code {
+
+    public List<Prioridades> ListPrioridades { get; set; } = new List<Prioridades>();
+    int Id { get; set; } = 0;
+    public string? Mensaje { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		ListPrioridades = await prioridadesServices.Listar(p => true);
+	}
+
+    public void goToCreat()
+    {
+        navigation.NavigateTo("/RegistroPrioridades/Creat");
+    }
+
+    public async void Buscar()
+    {
+        if (Id <= 0 || !await prioridadesServices.ExisteId(Id))
+        {
+            return;
+        }
+        navigation.NavigateTo($"/TiposTecnicos/RegistroTipos/details/{Id}");
+    }
+
+}
