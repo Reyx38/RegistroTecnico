@@ -15,14 +15,14 @@
             <h3>Nueva prioridad</h3>
 
             <div class="inputs-agregar">
-                <label>Nombres:</label>
+                <label>Descripcion:</label>
                 <InputText @bind-Value="Prioridades.Descripcion" />
                 <ValidationMessage For="@(() => Prioridades.Descripcion)" />
             </div>
 
             <div class="inputs-agregar">
                 <label>Tiempo:</label>
-                <InputNumber @bind-Value="Prioridades.Tiempo" />
+                <InputNumber @bind-Value="Prioridades.Tiempo" plachedor="formato de tiempo 00:00:00" />
                 <ValidationMessage For="@(() => Prioridades.Tiempo)" />
             </div>
 
