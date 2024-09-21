@@ -14,6 +14,6 @@ public class Prioridades
 
     [Required(ErrorMessage = "Este campo es obligatorio")]
     [Range(0.01, double.MaxValue, ErrorMessage = "El sueldo por hora debe ser mayor a 0.")]
-    [RegularExpression(@"^\d+$", ErrorMessage = "Solo se permiten números.")]
-    public int Tiempo { get; set; }
+    [RegularExpression(@"^\d{6}$", ErrorMessage = "Solo se permiten 6 números.")]
+	public int Tiempo { get; set; }
 }
