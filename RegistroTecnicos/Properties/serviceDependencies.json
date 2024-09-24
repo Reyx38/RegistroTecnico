@@ -1,12 +1,17 @@
 {
   "dependencies": {
-    "secrets1": {
-      "type": "secrets"
-    },
     "mssql1": {
+      "ignored": "true",
       "type": "mssql",
-      "connectionId": "ConnectionStrings:ConStr",
+      "connectionId": "ConnectionStrings:ConStr"
+    },
+    "secrets1": {
+      "type": "secrets",
       "dynamicId": null
+    },
+    "sqlite1": {
+      "type": "sqlite",
+      "connectionId": "ConnectionStrings:ConStr"
     }
   }
 }
