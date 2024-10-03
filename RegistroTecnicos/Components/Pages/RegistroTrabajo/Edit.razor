@@ -3,6 +3,7 @@
 @inject ClienteServices clienteService
 @inject TrabajoServices trabajoService
 @inject TecnicosServices tecnicoServices
+@inject PrioridadesServices PrioridaServices
 @inject NavigationManager navigation
 <link rel="stylesheet" href="modificar.css" />
 
@@ -29,8 +30,7 @@
                     }
                 </InputSelect>
 			<ValidationMessage For="@(() => Trabajo.ClienteId)" />
-
-            </div>
+        </div>
 			
             <div class="inputs-agregar">
                 <label>Fecha del trabajo:</label>
@@ -48,8 +48,19 @@
 			<ValidationMessage For="@(() => Trabajo.TecnicoId)" />
 		</div>
 
+		<div class="inputs-agregar">
+			<label>Cual es la prioridad:</label>
+			<InputSelect @bind-Value="Trabajo.PrioridadId">
+				<option ="0" selected disabled>Elija una opci&oacute;n</option>
+				@foreach (var Prioridad in Prioridades)
+				{
+					<option value="@Prioridad.PrioridadId">@Prioridad.Descripcion</option>
+				}
+			</InputSelect>
+		</div>
+
 		<div class="Inputs-text">
-			<label>Nombre:</label>
+			<label>Descripcion:</label>
 			<input type="text" @bind-value="Trabajo.Descripcion" />
 			<ValidationMessage For="@(() => Trabajo.Descripcion)" />
 		</div>
@@ -77,6 +88,7 @@
 	public Trabajos Trabajo { get; set; } = new Trabajos();
 	public List<Tecnicos> Tecnicos = new List<Tecnicos>();
 	public List<Clientes> Clientes = new List<Clientes>();
+	public List<Prioridades> Prioridades = new List<Prioridades>();
 
 
 	string Mensaje { get; set; } = string.Empty;
@@ -86,6 +98,8 @@
 		Trabajo = await trabajoService.Buscar(TrabajoId);
 		Tecnicos = await tecnicoServices.Listar(a => true);
 		Clientes = await clienteService.Listar(a => true);
+		Prioridades = await PrioridaServices.Listar(p => true);
+
 	}
 	public async Task Guardar()
 	{
