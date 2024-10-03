@@ -3,6 +3,7 @@
 @inject TrabajoServices WS
 @inject TecnicosServices tecnicoServices
 @inject ClienteServices CS
+@inject PrioridadesServices PrioridaServices
 @inject NavigationManager navigation
 
 <PageTitle>Crear Trabajo</PageTitle>
@@ -16,7 +17,7 @@
             <h3>Nuevo trabajo</h3>
 
             <div class="inputs-agregar">
-                <label>Cual es el cliente?:</label>
+                <label>Cual es el cliente:</label>
                 <InputSelect @bind-Value="Trabajo.ClienteId">
                     <option ="0" selected disabled>Elija una opci&oacute;n</option>
                     @foreach (var Cliente in Clientes)
@@ -28,12 +29,22 @@
 
             <div class="inputs-agregar"> 
                 <label>Eliga el T&eacute;cnico para el trabajo:</label>
-
                 <InputSelect class = "select"@bind-Value="Trabajo.TecnicoId">
                     <option ="0" selected disabled>Elija una opci&oacute;n</option>
                     @foreach (var Tecnico in Tecnicos)
                     {
                         <option value="@Tecnico.TecnicoId">@Tecnico.Nombres (@Tecnico.TipoTecnico?.Descripcion)</option>
+                    }
+                </InputSelect>
+            </div>
+
+            <div class="inputs-agregar">
+                <label>Cual es la prioridad:</label>
+                <InputSelect @bind-Value="Trabajo.PrioridadId">
+                    <option ="0" selected disabled>Elija una opci&oacute;n</option>
+                    @foreach (var Prioridad in Prioridades)
+                    {
+                        <option value="@Prioridad.PrioridadId">@Prioridad.Descripcion</option>
                     }
                 </InputSelect>
             </div>
@@ -55,13 +66,6 @@
                 <ValidationMessage For="@(() => Trabajo.Monto)" />
             </div>
 
-            @if (!string.IsNullOrEmpty(Mensaje))
-            {
-                <div class="alert alert-danger">
-                    @Mensaje
-                </div>
-            }
-
             <div class="Botones_agregar">
                 <button type="button" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square "> Volver</button>
                 <button type="submit" class="btn btn-success bi bi-floppy"> Guardar</button>
@@ -76,14 +80,13 @@
     public Trabajos Trabajo { get; set; } = new Trabajos();
     public List<Tecnicos> Tecnicos = new List<Tecnicos>();
     public List<Clientes> Clientes = new List<Clientes>();
-
-
-    string Mensaje { get; set; } = string.Empty;
+    public List<Prioridades> Prioridades = new List<Prioridades>();
 
     protected override async Task OnInitializedAsync()
     {
-        Tecnicos = await tecnicoServices.Listar(a => true);
-        Clientes = await CS.Listar(a => true);
+        Tecnicos = await tecnicoServices.Listar(t => true);
+        Clientes = await CS.Listar(c => true);
+        Prioridades = await PrioridaServices.Listar(p => true);
     }
     public async Task Guardar()
     {
