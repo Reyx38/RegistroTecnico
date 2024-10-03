@@ -47,7 +47,8 @@ public class TrabajoServices(Contexto contexto)
 		return await _contexto.Trabajos
 			.Include(t => t.Tecnicos)
 			.Include(c => c.Cliente)
-			.FirstOrDefaultAsync(p => p.TrabajoId == id);
+			.Include(p => p.Prioridad)
+			.FirstOrDefaultAsync(t => t.TrabajoId == id);
 	}
 
 	public async Task<List<Trabajos>> Listar(Expression<Func<Trabajos, bool>> criterio)
@@ -55,6 +56,7 @@ public class TrabajoServices(Contexto contexto)
 		return await _contexto.Trabajos
 			.Include(t => t.Tecnicos)
 			.Include(c => c.Cliente)
+			.Include(p => p.Prioridad)
 			.AsNoTracking()
 			.Where(criterio)
 			.ToListAsync();
