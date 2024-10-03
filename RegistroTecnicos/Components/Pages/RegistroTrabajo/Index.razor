@@ -22,11 +22,12 @@
             <tr>
                 <th>Trabajo Id</th>
                 <th>Fecha</th>
-                <th>Client Id</th>
+                <th>Cliente Id</th>
                 <th>Cliente</th>
                 <th>Tecnico Id</th>
                 <th>Tecnico</th>
                 <th>Descripci&oacute;n</th>
+                <th>Prioridad</th>
                 <th>Monto</th>
                 <th>Detalles</th>
                 <th>Modificar</th>
@@ -44,6 +45,7 @@
                     <td class="text-center">@Trabajo.TecnicoId</td>
                     <td class="text-center">@Trabajo.Tecnicos?.Nombres</td>
                     <td class="text-center">@Trabajo.Descripcion</td>
+                    <td class="text-center">@Trabajo.Prioridad?.Descripcion</td>
                     <td class="text-center">@Trabajo.Monto.ToString("#.00") $</td>
                     <td class="text-center">
                         <a href="/RegistroTrabajos/details/@Trabajo.TrabajoId" class=" bi bi-eye"></a>
