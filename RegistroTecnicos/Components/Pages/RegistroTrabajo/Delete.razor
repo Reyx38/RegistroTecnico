@@ -6,31 +6,41 @@
 
 <PageTitle>Detalles del trabajo</PageTitle>
 
-@*Header*@
+<div class="container">
+	<div class="Card">
+		<div class="card-header">
+			<h2 class="card-title">Details</h2>
+		</div>
+		<div class="card-body">
+			<ul>
+				<li><strong>Trabajo Id:</strong> @Trabajo.TrabajoId</li>
+				<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
+				<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
+				<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
+				<li><strong>Prioridad del trabajo:</strong> @Trabajo.Prioridad?.Descripcion</li>
+				<li><strong>fecha de solicitud:</strong> @Trabajo.Fecha?.ToString("dd/MM/yyyy")</li>
+				<li><strong>Monto:</strong> @Trabajo.Monto.ToString("#.00")</li>
+			</ul>
+			<div class="border border-success p-3 mt-3">
+				@foreach (var detalle in Trabajo.TrabajosDetalles)
+				{
+					<ul>
+						<li>Articulo Id: @detalle.ArticuloId</li>
+						<li>Precio de Articulo: @detalle.precio $</li>
+						<li>Cantidad de Articulos: @detalle.cantidad</li>
+						<li>Total en Articulos: @(detalle.precio * detalle.cantidad) $</li>
+					</ul>
+				}
+			</div>
+		</div>
 
-<h2>Eliminar Trabajo</h2>
-@*Body*@
-<div class="Contenedor-eliminar">
-
-	<div class="list-eliminar">
-		<ul>
-			<li><strong>Trabajo Id:</strong> @Trabajo.TrabajoId</li>
-			<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
-			<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
-			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
-			<li><strong>Prioridad del trabajo:</strong> @Trabajo.Prioridad?.Descripcion</li>
-			<li><strong>Hora de solicitud:</strong> @Trabajo.Fecha?.ToString("dd/MM/yyyy")</li>
-			<li><strong>Monto:</strong> @Trabajo.Monto.ToString("#.00")</li>
-		</ul>
-	</div>
-
-	<div class="alert alert-danger">
-		<label>¿Seguro que desea eliminar a este trabajo?</label>
-	</div>
-
-	<div class="botones">
-		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
-		<button type="submit" @onclick="eliminar" class="bi bi-trash"> Eliminar trabajo</button>
+		<div class="card-footer">
+			<div class="alert alert-danger">
+				<label>¿Seguro que desea eliminar a este trabajo?</label>
+			</div>
+			<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
+			<button type="submit" @onclick="eliminar" class="btn btn-outline-danger bi bi-trash"> Eliminar trabajo</button>
+		</div>
 	</div>
 </div>
 
