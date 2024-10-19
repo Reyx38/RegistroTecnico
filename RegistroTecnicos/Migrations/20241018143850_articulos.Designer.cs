@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroTecnicos.DAL;
 
@@ -10,9 +11,11 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20241018143850_articulos")]
+    partial class articulos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -40,12 +43,7 @@ namespace RegistroTecnicos.Migrations
                         .IsRequired()
                         .HasColumnType("REAL");
 
-                    b.Property<int?>("TrabajoId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ArticuloId");
-
-                    b.HasIndex("TrabajoId");
 
                     b.ToTable("Articulos");
 
@@ -209,24 +207,15 @@ namespace RegistroTecnicos.Migrations
                     b.Property<int>("cantidad")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double?>("costo")
-                        .IsRequired()
+                    b.Property<double>("costo")
                         .HasColumnType("REAL");
 
-                    b.Property<double?>("precio")
-                        .IsRequired()
+                    b.Property<double>("precio")
                         .HasColumnType("REAL");
 
                     b.HasKey("DetalleId");
 
                     b.ToTable("TrabajosDetalles");
-                });
-
-            modelBuilder.Entity("RegistroTecnicos.Models.Articulos", b =>
-                {
-                    b.HasOne("RegistroTecnicos.Models.Trabajos", null)
-                        .WithMany("TrabajosDetalles")
-                        .HasForeignKey("TrabajoId");
                 });
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
@@ -268,11 +257,6 @@ namespace RegistroTecnicos.Migrations
             modelBuilder.Entity("RegistroTecnicos.Models.Clientes", b =>
                 {
                     b.Navigation("Trabajos");
-                });
-
-            modelBuilder.Entity("RegistroTecnicos.Models.Trabajos", b =>
-                {
-                    b.Navigation("TrabajosDetalles");
                 });
 #pragma warning restore 612, 618
         }
