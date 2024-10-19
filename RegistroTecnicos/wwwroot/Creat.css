@@ -19,8 +19,6 @@
 
 h2 {
     text-align: center;
-    padding-bottom: 15px;
-    font-size: 40px;
     font-weight: bold;
     color: #333;
     border-bottom: 2px solid #333;
@@ -79,8 +77,6 @@ h2 {
 select {
     width: 100%;
     padding: 0 5px;
-    height: 30px;
-    font-size: 15px;
     border: none;
     border-radius: 4px;
     background: white;
