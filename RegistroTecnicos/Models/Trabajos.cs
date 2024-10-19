@@ -22,14 +22,20 @@ public class Trabajos
 
 	[ForeignKey("Tecnicos")]
 	[Required (ErrorMessage = "Debe de elegir un tecnico")]
-	public int TecnicoId { get; set; }
+    [Range(0.01, double.MaxValue, ErrorMessage = "Debe de elegir un tecnico")]
+    public int TecnicoId { get; set; }
 	public Tecnicos? Tecnicos { get; set; }
+	[ForeignKey("TrabajoId")]
+	public ICollection<TrabajosDetalles> TrabajosDetalles { get; set; } = [];
 
 	[Required (ErrorMessage = "Debe de elegir un cliente")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Debe de elegir un cliente")]
     public int? ClienteId { get; set; }
     public Clientes? Cliente { get; set; }
 
-	[ForeignKey("Prioridad")]
+    [Required(ErrorMessage = "Debe de elegir un cliente")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Debe de elegir un prioridad")]
+    [ForeignKey("Prioridad")]
 	public int? PrioridadId { get;set; }
 	public Prioridades? Prioridad { get;set; }
 }
