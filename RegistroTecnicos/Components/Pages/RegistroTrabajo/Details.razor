@@ -3,28 +3,41 @@
 @inject TrabajoServices trabajoService
 @inject IJSRuntime runTime
 @inject NavigationManager navigation
-<link rel="stylesheet" href="details.css" />
 
 <PageTitle>Detalles del trabajo</PageTitle>
 
-@*Header*@
-<h2>Details</h2>
 @*Body*@
-<div class="Contenedor_detalles">
-	<h3>Detalles del trabajo</h3>
-	<div class="list-details">
-		<ul>
-			<li><strong>T&eacute;cnico Id:</strong> @Trabajo.TrabajoId</li>
-			<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
-			<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
-			<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
-			<li><strong>Prioridad del trabajo:</strong> @Trabajo.Prioridad?.Descripcion</li>
-			<li><strong>fecha de solicitud:</strong> @Trabajo.Fecha?.ToString("dd/MM/yyyy")</li>
-			<li><strong>Monto:</strong> @Trabajo.Monto.ToString("#.00")</li>
-		</ul>
+<div class="container">
+	<div class="Card">
+		<div class="card-header">
+			<h2 class="card-title">Details</h2>
+		</div>
+		<div class="card-body">
+			<ul>
+				<li><strong>Trabajo Id:</strong> @Trabajo.TrabajoId</li>
+				<li><strong>Nombre del cliente:</strong> @Trabajo.Cliente?.Nombres</li>
+				<li><strong>Nombre del t&eacute;cnico:</strong> @Trabajo.Tecnicos?.Nombres</li>
+				<li><strong>Descripci&oacute;n del trabajo:</strong> @Trabajo.Descripcion</li>
+				<li><strong>Prioridad del trabajo:</strong> @Trabajo.Prioridad?.Descripcion</li>
+				<li><strong>fecha de solicitud:</strong> @Trabajo.Fecha?.ToString("dd/MM/yyyy")</li>
+				<li><strong>Monto:</strong> @Trabajo.Monto.ToString("#.00")</li>
+			</ul>
+			<div class="border border-success p-3 mt-3">
+				@foreach (var detalle in Trabajo.TrabajosDetalles)
+				{
+					<ul>
+						<li>Articulo Id: @detalle.ArticuloId</li>
+						<li>Precio de Articulo: @detalle.precio $</li>
+						<li>Cantidad de Articulos: @detalle.cantidad</li>
+						<li>Total en Articulos: @(detalle.precio * detalle.cantidad) $</li>
+					</ul>
+				}
+			</div>
+		</div>
+		
 	</div>
 
-	<div class="btn-details">
+	<div class="card-footer">
 		<button type="submit" @onclick="Volver" class="btn btn-info bi bi-arrow-left-square"> Volver</button>
 		<button type="submit" @onclick="Terminar" class="btn btn-success bi bi-check-circle"> Finalizar </button>
 	</div>
