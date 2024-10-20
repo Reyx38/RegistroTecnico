@@ -109,6 +109,10 @@
                 </div>
               </div>
             <div class="card-footer">
+                @if (!string.IsNullOrEmpty(errorMensaje))
+                {
+                    <div class="alert alert-danger">@errorMensaje</div>
+                }
                 <a href="/RegistroTrabajos/index" class="btn btn-outline-primary bi bi-arrow-left mt-2">Volver</a>
                 <button type="submit" class="btn btn-outline-success bi bi-floppy mt-2">Guardar</button>
             </div>
@@ -127,6 +131,7 @@
     public List<Prioridades> Prioridades = new List<Prioridades>();
     public List<Articulos> ListArticulos { get; set; } = [];
     public TrabajosDetalles Detalles { get; set; } = new TrabajosDetalles();
+    string? errorMensaje { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -167,6 +172,12 @@
     }
     public async Task Guardar()
     {
+        if (Trabajo.TrabajosDetalles.Count.Equals(0))
+        {
+            errorMensaje = "Debe de ingresar un Detalle del trabajo";
+            return;
+        }
+        
         await WS.Guardar(Trabajo);
         navigation.NavigateTo("/RegistroTrabajos/index");
     }
