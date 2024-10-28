@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RegistroTecnicos.DAL;
@@ -11,44 +12,42 @@ using RegistroTecnicos.DAL;
 namespace RegistroTecnicos.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20241018151325_Icollection")]
-    partial class Icollection
+    [Migration("20241026050532_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("RegistroTecnicos.Models.Articulos", b =>
                 {
                     b.Property<int>("ArticuloId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.Property<double?>("Costo")
-                        .IsRequired()
-                        .HasColumnType("REAL");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArticuloId"));
+
+                    b.Property<double>("Costo")
+                        .HasColumnType("float");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("Existencia")
-                        .IsRequired()
-                        .HasColumnType("INTEGER");
+                    b.Property<int>("Existencia")
+                        .HasColumnType("int");
 
-                    b.Property<double?>("Precio")
-                        .IsRequired()
-                        .HasColumnType("REAL");
-
-                    b.Property<int?>("TrabajoId")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Precio")
+                        .HasColumnType("float");
 
                     b.HasKey("ArticuloId");
-
-                    b.HasIndex("TrabajoId");
 
                     b.ToTable("Articulos");
 
@@ -83,36 +82,99 @@ namespace RegistroTecnicos.Migrations
                 {
                     b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClienteId"));
 
                     b.Property<string>("Nombres")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Telefono")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("ClienteId");
 
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("RegistroTecnicos.Models.CotizacionDetalles", b =>
+                {
+                    b.Property<int>("DetalleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleId"));
+
+                    b.Property<int>("ArticuloId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CotizacionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CotizacionesCotizacionId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Precio")
+                        .HasColumnType("float");
+
+                    b.HasKey("DetalleId");
+
+                    b.HasIndex("CotizacionesCotizacionId");
+
+                    b.ToTable("CotizacionDetalles");
+                });
+
+            modelBuilder.Entity("RegistroTecnicos.Models.Cotizaciones", b =>
+                {
+                    b.Property<int>("CotizacionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CotizacionId"));
+
+                    b.Property<int>("ClientesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Monto")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Observacion")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("CotizacionId");
+
+                    b.HasIndex("ClientesId");
+
+                    b.ToTable("Cotizaciones");
+                });
+
             modelBuilder.Entity("RegistroTecnicos.Models.Prioridades", b =>
                 {
                     b.Property<int>("PrioridadId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrioridadId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Tiempo")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("PrioridadId");
 
@@ -123,18 +185,20 @@ namespace RegistroTecnicos.Migrations
                 {
                     b.Property<int>("TecnicoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TecnicoId"));
 
                     b.Property<string>("Nombres")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("SueldoHora")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<int>("TipoTecnicoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("TecnicoId");
 
@@ -147,12 +211,14 @@ namespace RegistroTecnicos.Migrations
                 {
                     b.Property<int>("TipoDeTecnicosId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TipoDeTecnicosId"));
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("TipoDeTecnicosId");
 
@@ -163,28 +229,31 @@ namespace RegistroTecnicos.Migrations
                 {
                     b.Property<int>("TrabajoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrabajoId"));
 
                     b.Property<int?>("ClienteId")
                         .IsRequired()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime?>("Fecha")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<double>("Monto")
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<int?>("PrioridadId")
-                        .HasColumnType("INTEGER");
+                        .IsRequired()
+                        .HasColumnType("int");
 
                     b.Property<int>("TecnicoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("TrabajoId");
 
@@ -201,35 +270,50 @@ namespace RegistroTecnicos.Migrations
                 {
                     b.Property<int>("DetalleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleId"));
 
                     b.Property<int>("ArticuloId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("TrabajoId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("cantidad")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<double?>("costo")
                         .IsRequired()
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.Property<double?>("precio")
                         .IsRequired()
-                        .HasColumnType("REAL");
+                        .HasColumnType("float");
 
                     b.HasKey("DetalleId");
+
+                    b.HasIndex("TrabajoId");
 
                     b.ToTable("TrabajosDetalles");
                 });
 
-            modelBuilder.Entity("RegistroTecnicos.Models.Articulos", b =>
+            modelBuilder.Entity("RegistroTecnicos.Models.CotizacionDetalles", b =>
                 {
-                    b.HasOne("RegistroTecnicos.Models.Trabajos", null)
-                        .WithMany("TrabajosDetalles")
-                        .HasForeignKey("TrabajoId");
+                    b.HasOne("RegistroTecnicos.Models.Cotizaciones", null)
+                        .WithMany("CotizacionDetalles")
+                        .HasForeignKey("CotizacionesCotizacionId");
+                });
+
+            modelBuilder.Entity("RegistroTecnicos.Models.Cotizaciones", b =>
+                {
+                    b.HasOne("RegistroTecnicos.Models.Clientes", "TipoTecnico")
+                        .WithMany()
+                        .HasForeignKey("ClientesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoTecnico");
                 });
 
             modelBuilder.Entity("RegistroTecnicos.Models.Tecnicos", b =>
@@ -253,7 +337,9 @@ namespace RegistroTecnicos.Migrations
 
                     b.HasOne("RegistroTecnicos.Models.Prioridades", "Prioridad")
                         .WithMany()
-                        .HasForeignKey("PrioridadId");
+                        .HasForeignKey("PrioridadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RegistroTecnicos.Models.Tecnicos", "Tecnicos")
                         .WithMany()
@@ -268,9 +354,23 @@ namespace RegistroTecnicos.Migrations
                     b.Navigation("Tecnicos");
                 });
 
+            modelBuilder.Entity("RegistroTecnicos.Models.TrabajosDetalles", b =>
+                {
+                    b.HasOne("RegistroTecnicos.Models.Trabajos", null)
+                        .WithMany("TrabajosDetalles")
+                        .HasForeignKey("TrabajoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("RegistroTecnicos.Models.Clientes", b =>
                 {
                     b.Navigation("Trabajos");
+                });
+
+            modelBuilder.Entity("RegistroTecnicos.Models.Cotizaciones", b =>
+                {
+                    b.Navigation("CotizacionDetalles");
                 });
 
             modelBuilder.Entity("RegistroTecnicos.Models.Trabajos", b =>
