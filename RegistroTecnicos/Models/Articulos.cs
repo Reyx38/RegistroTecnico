@@ -13,12 +13,12 @@ public class Articulos
 	public string? Descripcion { get; set; }
 	
 	[Required(ErrorMessage = "Campo obligatorio")]
-	public double? Costo { get; set; }
+	public double Costo { get; set; }
 	
 	[Required(ErrorMessage = "Campo obligatorio")]
-	public double? Precio { get; set; }
+	public double Precio { get; set; }
 
 	[Required(ErrorMessage = "Campo obligatorio")]
-	public int? Existencia { get; set; }
+	public int Existencia { get; set; }
 
 }
