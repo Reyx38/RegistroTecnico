@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="border border-success p-3 mt-3">
-					<DetallesTrabajo 
+					<SelecionarArticulo
                       ListArticulos="ListArticulos"
                       ArticuloId="Detalles.ArticuloId"
                       Cantidad="Detalles.cantidad"
@@ -163,6 +163,7 @@
             await Task.CompletedTask;
         }
     }
+
     public void Eliminar(TrabajosDetalles detalle)
     {
         Trabajo.TrabajosDetalles.Remove(detalle);
@@ -170,6 +171,7 @@
         Detalles.ArticuloId = detalle.ArticuloId;
         Detalles.precio = detalle.precio;
     }
+
     public async Task Guardar()
     {
         if (Trabajo.TrabajosDetalles.Count.Equals(0))

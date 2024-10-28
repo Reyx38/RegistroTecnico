@@ -12,8 +12,11 @@ public class Contexto(DbContextOptions<Contexto> options) : DbContext(options)
 	public DbSet<Prioridades> Prioridades { get; set; }
 	public DbSet<Articulos> Articulos { get; set; }
 	public DbSet<TrabajosDetalles> TrabajosDetalles { get; set; }
+    public DbSet<Cotizaciones> Cotizaciones { get; set; }
+    public DbSet<CotizacionDetalles> CotizacionDetalles { get; set; }
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
 		modelBuilder.Entity<Articulos>().HasData(new List<Articulos>()
